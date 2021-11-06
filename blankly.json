@@ -1,0 +1,9 @@
+{
+  "main_script": "./bot.py",
+  "python_version": "3.8",
+  "requirements": "./requirements.txt",
+  "working_directory": ".",
+  "ignore_files": [
+    ""
+  ]
+}
