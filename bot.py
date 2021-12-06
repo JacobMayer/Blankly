@@ -1,3 +1,4 @@
+import blankly
 from blankly import Strategy, StrategyState, Interface
 from blankly import Alpaca
 from blankly.utils import trunc
@@ -72,20 +73,21 @@ def golden_cross(var, inter, symbol, price):
         interface.market_order(symbol, 'sell', int(interface.account[symbol].available))
         variables['has_bought'] = False
     
-def rsi(var, inter, symbol, price):
+def rsi_strat(var, inter, symbol, price, state: StrategyState):
     variables = var
     interface = inter
+
     rsi = blankly.indicators.rsi(state.variables['history'])
-    if rsi[-1] < 30 and not state.variables['owns_position']:
+    if rsi[-1] < 30 and not state.variables['has_bought']:
         # Dollar cost average buy
         buy = int(state.interface.cash/price)
         state.interface.market_order(symbol, side='buy', size=buy)
-        state.variables['owns_position'] = True
-    elif rsi[-1] > 70 and state.variables['owns_position']:
+        state.variables['has_bought'] = True
+    elif rsi[-1] > 70 and state.variables['has_bought']:
         # Dollar cost average sell
         curr_value = int(state.interface.account[state.base_asset].available)
         state.interface.market_order(symbol, side='sell', size=curr_value)
-        state.variables['owns_position'] = False
+        state.variables['has_bought'] = False
     
 def price_event(price, symbol, state: StrategyState):
     interface: Interface = state.interface
@@ -96,7 +98,7 @@ def price_event(price, symbol, state: StrategyState):
     
  #   macd_strat(variables, interface, symbol, price)
  #   golden_cross(variables, interface, symbol, price)
- #   rsi(variables, interface, symbol, price)
+    rsi_strat(variables, interface, symbol, price, state)
 
 alpaca = Alpaca()
 s = Strategy(alpaca)
