@@ -94,9 +94,9 @@ def price_event(price, symbol, state: StrategyState):
 
     variables['history'].append(price)
     
- #   macd_strat(variables, interface, symbol, price)
- #   golden_cross(variables, interface, symbol, price)
- #   rsi(variables, interface, symbol, price)
+    macd_strat(variables, interface, symbol, price)
+    golden_cross(variables, interface, symbol, price)
+    rsi(variables, interface, symbol, price)
 
 alpaca = Alpaca()
 s = Strategy(alpaca)
