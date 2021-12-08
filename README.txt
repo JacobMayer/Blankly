@@ -10,6 +10,7 @@ Step 2: Run any of the python files for the desired strategy
 Step 3: An HTML Webpage with graphs will appear, 
 along with data in the console for valuable metrics such as Compound Annual Growth, Cumulative Returns, etc.
 
-Step 4: To edit the Symbol (i.e. MSFT, SPY, TSLA, NFLX) change s.add_price_event and the resolution you'd like (i.e. 1m, 5m, 30m, 1d)
+Step 4: To edit the Symbol/Ticker (i.e. MSFT, SPY, TSLA, NFLX) change s.add_price_event and the resolution you'd like (i.e. 1m, 5m, 30m, 1d)
+You can even add additional s.add_price_events to backtest multiple tickers at one time
 
 Step 5: You can change s.backtest to change initial account values, and the time frame for the data (i.e. 2y, 1y, 5y) or enter a specific time frame using 
