@@ -76,13 +76,14 @@ def golden_cross(var, inter, symbol, price):
 def rsi_strat(var, inter, symbol, price, state: StrategyState):
     variables = var
     interface = inter
-
+	#if RSI is oversold, buy
     rsi = blankly.indicators.rsi(state.variables['history'])
     if rsi[-1] < 30 and not state.variables['has_bought']:
         # Dollar cost average buy
         buy = int(state.interface.cash/price)
         state.interface.market_order(symbol, side='buy', size=buy)
         state.variables['has_bought'] = True
+        #if RSI is overbought, sell
     elif rsi[-1] > 70 and state.variables['has_bought']:
         # Dollar cost average sell
         curr_value = int(state.interface.account[state.base_asset].available)
@@ -95,11 +96,12 @@ def price_event(price, symbol, state: StrategyState):
     variables = state.variables
 
     variables['history'].append(price)
-    
+    #select which strategry to use here, uncomment it.
     macd_strat(variables, interface, symbol, price)
- #   golden_cross(variables, interface, symbol, price)
+    #golden_cross(variables, interface, symbol, price)
     #rsi_strat(variables, interface, symbol, price, state)
 
+	#return metrics such as CAGR, Cumulative returns etc, along with account history.
 def backtest_metrics(backtest_data):
     returns = backtest_data['returns']['value']
     return sortino(returns) + sharpe(returns)
