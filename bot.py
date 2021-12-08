@@ -100,13 +100,10 @@ def price_event(price, symbol, state: StrategyState):
     variables['history'].append(price)
     
     macd_strat(variables, interface, symbol, price)
-<<<<<<< HEAD
  #   golden_cross(variables, interface, symbol, price)
  #   rsi(variables, interface, symbol, price)
-=======
     golden_cross(variables, interface, symbol, price)
     rsi(variables, interface, symbol, price)
->>>>>>> 9b59e3493fcd4d3dede217f1d63400089d365120
 
 
 # UI creation
