@@ -2,6 +2,11 @@ from blankly import Strategy, StrategyState, Interface
 from blankly import Alpaca
 from blankly.utils import trunc
 from blankly.indicators import macd, sma, rsi
+import streamlit as st
+import pandas as pd
+from bokeh.plotting import figure, output_file, show
+from bokeh.models import ColumnDataSource, NumeralTickFormatter, HoverTool, DaysTicker, DatetimeTickFormatter, graphs
+
 
 
 SHORT_PERIOD = 12
@@ -95,13 +100,59 @@ def price_event(price, symbol, state: StrategyState):
     variables['history'].append(price)
     
     macd_strat(variables, interface, symbol, price)
+<<<<<<< HEAD
+ #   golden_cross(variables, interface, symbol, price)
+ #   rsi(variables, interface, symbol, price)
+=======
     golden_cross(variables, interface, symbol, price)
     rsi(variables, interface, symbol, price)
+>>>>>>> 9b59e3493fcd4d3dede217f1d63400089d365120
+
+
+# UI creation
+# initial version by Justin Carlson
+# static homepage stuff for now
 
 alpaca = Alpaca()
 s = Strategy(alpaca)
-s.add_price_event(price_event, 'SPY', resolution='1d', init=init)
 
-s.backtest(initial_values={'USD': 10000}, to='2y')
+def addStockEvent(stock, resolution, init):
+    s.add_price_event(price_event, stock, resolution, init)
+    return
 
+def buildChartData(amount, time, interface):
 
+    backTestCallback = s.backtest(initial_values={'USD': amount}, to=time)
+
+    backTestAcctInfo = backTestCallback.get_account_history()
+
+    time = backTestAcctInfo['time'].tolist()
+    value = backTestAcctInfo['USD'].tolist()
+
+    infoFigure = figure(
+     title='Account Value (USD)',
+     x_axis_label='Time',
+     x_axis_type='datetime',
+     y_axis_label='Value (USD)')
+
+    infoFigure.line(time, value, legend_label='Trend', line_width=2)
+
+    return infoFigure
+
+def buildDashboard():
+   
+    menu, graphs = st.columns([2,1])
+  
+    with menu:
+        st.write(""" # PPI \n""")
+        st.sidebar.button(label="Dashboard", help="Dashboard")
+
+    with graphs:
+        #build charts and puts on webpage of all stock events
+        st.bokeh_chart(buildChartData(10000, '2y', graphs))
+    
+#in the future this will be iterated upon based on user requests
+addStockEvent('TSLA', '1d', init)
+
+#build user interface on webpage
+buildDashboard()
