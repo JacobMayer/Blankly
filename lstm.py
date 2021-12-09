@@ -182,7 +182,7 @@ plt.xlabel("Date")
 plt.ylabel("Closing Price (USD)")
 plt.plot(training["Close"])
 plt.plot(validation[["Close", "Predictions"]])
-plt.legend(["Training Data", "Validation", "Predictions"])
+plt.legend(["Training Data", "Validation Data", "Predictions"])
 plt.show()
 
 
