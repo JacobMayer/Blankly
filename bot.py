@@ -1,7 +1,10 @@
+# Blankly Imports
 from blankly import Strategy, StrategyState, Interface
 from blankly import Alpaca
 from blankly.utils import trunc
 from blankly.indicators import macd, sma, rsi
+
+# Streamlit Imports
 import streamlit as st
 import pandas as pd
 from bokeh.plotting import figure, output_file, show
@@ -147,6 +150,7 @@ def buildDashboard():
     with graphs:
         #build charts and puts on webpage of all stock events
         st.bokeh_chart(buildChartData(10000, '2y', graphs))
+        
     
 #in the future this will be iterated upon based on user requests
 addStockEvent('TSLA', '1d', init)
