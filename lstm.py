@@ -54,19 +54,23 @@ for ma in movingAverage: # Will add all three moving averages to the new data fr
     stockDataFrame2[columnName] = stockDataFrame2["Adj Close"].rolling(ma).mean() # Calculcates current moving average and makes a new column for it
 
 
-print(stockDataFrame2)     
+
+stockDataFrame["Daily Return"] = stockDataFrame["Adj Close"].pct_change()
+sns.displot(stockDataFrame["Daily Return"].dropna(), bins=100, color="goldenrod") # Shows whether or not the daily return is evenly distributed
+# plt.title("Daily Return")
+# plt.show()
 
 # Mat plot lib plot
-plt.figure(figsize=(13,4))
-plt.plot(stockDataFrame["Close"], label="Closing Price History") 
-plt.plot(stockDataFrame["MA For 10 Days"], label="10 Day Moving Average") 
-plt.plot(stockDataFrame["MA For 30 Days"], label="30 Day Moving Average") 
-plt.plot(stockDataFrame["MA For 60 Days"], label="60 Day Moving Average") 
-plt.title("Tesla Closing Price and Moving Average") 
-plt.xlabel("Time") 
-plt.ylabel("Price") 
+# plt.figure(figsize=(13,4))
+# plt.plot(stockDataFrame["Close"], label="Closing Price History") 
+# plt.plot(stockDataFrame["MA For 10 Days"], label="10 Day Moving Average") 
+# plt.plot(stockDataFrame["MA For 30 Days"], label="30 Day Moving Average") 
+# plt.plot(stockDataFrame["MA For 60 Days"], label="60 Day Moving Average") 
+# plt.title("Tesla Closing Price and Moving Average") 
+# plt.xlabel("Time") 
+# plt.ylabel("Price") 
 
 
-plt.style.use("fivethirtyeight")
-plt.legend()
-plt.show()
+# plt.style.use("fivethirtyeight")
+# plt.legend()
+# plt.show()
