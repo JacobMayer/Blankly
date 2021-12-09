@@ -159,12 +159,36 @@ predictions = scaler.inverse_transform(predictions)
 rootMeanSquaredError = np.sqrt(np.mean(((predictions - yTestData) ** 2)))
 print('rmse ', rootMeanSquaredError)
 
+
+
 # Calculates the mean absolute percentage error
 meanAbsolutePercentageError = np.mean(np.abs((yTestData - predictions) / yTestData)) * 100
 print('mape ', meanAbsolutePercentageError)
 
 
-# Mat plot lib plot
+
+
+
+pd.options.mode.chained_assignment = None
+
+# Plot the data
+training = data[:trainingDataLength]
+validation = data[trainingDataLength:]
+validation["Predictions"] = predictions
+
+plt.figure(figsize=(13,4))
+plt.title("Stock Price Forecast LSTM Model")
+plt.xlabel("Date")
+plt.ylabel("Closing Price (USD)")
+plt.plot(training["Close"])
+plt.plot(validation[["Close", "Predictions"]])
+plt.legend(["Training Data", "Validation", "Predictions"])
+plt.show()
+
+
+
+
+# Visualize the data 
 # plt.figure(figsize=(13,4))
 # plt.plot(stockDataFrame["Close"], label="Closing Price History") 
 # plt.plot(stockDataFrame["MA For 10 Days"], label="10 Day Moving Average") 
