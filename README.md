@@ -61,5 +61,4 @@ You should see initial values like such running over and over until it reaches 1
 ![image](https://user-images.githubusercontent.com/78880630/138394972-58f1b4cb-6bef-4cd1-8584-4de2dcea3dbc.png)
 
 And a graph that looks similar to this when it is finished running through the timesteps:
-![image](https://user-images.githubusercontent.com/78880630/138395802-e65ecd75-fb67-4f90-9a0f-be69f14d9ea1.png)
-
+![image](https://user-images.githubusercontent.com/78880630/145345019-99020b99-f858-47ed-8afb-ffd0259384cc.png)
