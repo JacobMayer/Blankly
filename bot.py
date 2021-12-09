@@ -151,7 +151,7 @@ def buildDashboard():
         #build charts and puts on webpage of all stock events
         st.bokeh_chart(buildChartData(10000, '2y', graphs))
         
-    
+
 #in the future this will be iterated upon based on user requests
 addStockEvent('TSLA', '1d', init)
 
