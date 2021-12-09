@@ -11,7 +11,7 @@ import requests
 import io
 import matplotlib.pyplot as plt
 # import matplotlib.pyldab as rcParams
-# import seaborn as sns
+import seaborn as sns
 # import tensorflow
 from pandas_datareader.data import DataReader
 
@@ -40,13 +40,33 @@ stockDataFrame = stockDataFrame.append(stock ,sort=False) # Adds the stock price
 stockDataFrame['Symbol'] = ticker
 
 
-# print(stockDataFrame) 
 
+
+
+sns.set_style("whitegrid") # Sets style for plotting
+
+movingAverage = [10, 30, 60] # Moving average of stock for 10, 30 & 60 days
+
+
+for ma in movingAverage: # Will add all three moving averages to the new data frame
+    columnName = f"MA For {ma} Days"
+    stockDataFrame2 = stockDataFrame
+    stockDataFrame2[columnName] = stockDataFrame2["Adj Close"].rolling(ma).mean() # Calculcates current moving average and makes a new column for it
+
+
+print(stockDataFrame2)     
+
+# Mat plot lib plot
 plt.figure(figsize=(13,4))
-plt.plot(stockDataFrame["Close"], label="Closing Price History")
-plt.title("Tesla Closing Price History")
-plt.xlabel("Date")
-plt.ylabel("Closing Price")
+plt.plot(stockDataFrame["Close"], label="Closing Price History") 
+plt.plot(stockDataFrame["MA For 10 Days"], label="10 Day Moving Average") 
+plt.plot(stockDataFrame["MA For 30 Days"], label="30 Day Moving Average") 
+plt.plot(stockDataFrame["MA For 60 Days"], label="60 Day Moving Average") 
+plt.title("Tesla Closing Price and Moving Average") 
+plt.xlabel("Time") 
+plt.ylabel("Price") 
 
 
+plt.style.use("fivethirtyeight")
+plt.legend()
 plt.show()
