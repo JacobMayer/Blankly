@@ -8,7 +8,7 @@ The goals and actual implementations of this project are currently as follows:
 
 
 ## Code Developed By Team 28
-Team 28 is soley responsible for developing the user interface used in this projects as well as the machine learning models and the trading strategies. Blankly was used to implement the APi calls, backtesting across multiple exchanges, and calculating returns on investment
+Team 28 is soley responsible for developing the user interface used in this projects as well as the machine learning models and the trading strategies. The Blankly repository was used to implement the APi calls, backtesting across multiple exchanges, and calculating returns on investment
 
 ## Code Integrated From Other Sources
 The creation of the graphs was integrated from other sources.
