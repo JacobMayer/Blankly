@@ -1,8 +1,11 @@
 # Blankly Imports
 from blankly import Strategy, StrategyState, Interface
 from blankly import Alpaca
+import blankly
 from blankly.utils import trunc
 from blankly.indicators import macd, sma, rsi
+import blankly as blankly
+import numpy as np
 
 # Streamlit Imports
 import streamlit as st
@@ -105,8 +108,8 @@ def price_event(price, symbol, state: StrategyState):
     macd_strat(variables, interface, symbol, price)
  #   golden_cross(variables, interface, symbol, price)
  #   rsi(variables, interface, symbol, price)
-    golden_cross(variables, interface, symbol, price)
-    rsi(variables, interface, symbol, price)
+    #golden_cross(variables, interface, symbol, price)
+    #rsi(variables, interface, symbol, price)
 
 
 # UI creation
@@ -120,36 +123,68 @@ def addStockEvent(stock, resolution, init):
     s.add_price_event(price_event, stock, resolution, init)
     return
 
-def buildChartData(amount, time, interface):
+def buildChartData(amount, duration, type):
 
-    backTestCallback = s.backtest(initial_values={'USD': amount}, to=time)
+    backTestCallback = s.backtest(initial_values={'USD': amount}, to=duration)
 
-    backTestAcctInfo = backTestCallback.get_account_history()
+    #infoFigure = figure()
 
-    time = backTestAcctInfo['time'].tolist()
-    value = backTestAcctInfo['USD'].tolist()
+    time = []
+    value = []
 
-    infoFigure = figure(
-     title='Account Value (USD)',
-     x_axis_label='Time',
-     x_axis_type='datetime',
-     y_axis_label='Value (USD)')
+    if (type == "accountValue"):
+        backTestAcctInfo = backTestCallback.get_account_history()
 
-    infoFigure.line(time, value, legend_label='Trend', line_width=2)
+        time = backTestAcctInfo['time']#.tolist()
+        value = backTestAcctInfo['USD']#.tolist()
 
+        #infoFigure = figure(
+        #title='Account Value (USD)',
+        #x_axis_label='Time',
+        #x_axis_type='datetime',
+        #y_axis_label='Value (USD)')
+
+    if (type == "tradesOverTime"):
+        backTestAcctInfo = backTestCallback.get_account_history()
+
+        stockName = 'TSLA' # will have to be dynamic at one point
+
+        time = backTestAcctInfo['time']#.tolist()
+        value = backTestAcctInfo[stockName]#.tolist()
+
+        #infoFigure = figure(
+        #title='Shares owned ' + "(" + stockName + ")",
+        #x_axis_label='Time',
+        #x_axis_type='datetime',
+        #y_axis_label='Shares ' + "(" + stockName + ")"
+        #)
+
+    #infoFigure.line(time, value, legend_label='Trend', line_width=2)
+
+    infoFigure = value
+    print(infoFigure)
     return infoFigure
 
 def buildDashboard():
    
-    menu, graphs = st.columns([2,1])
-  
-    with menu:
-        st.write(""" # PPI \n""")
-        st.sidebar.button(label="Dashboard", help="Dashboard")
+    graph1, graph2 = st.columns(2)
 
-    with graphs:
-        #build charts and puts on webpage of all stock events
-        st.bokeh_chart(buildChartData(10000, '2y', graphs))
+    # will require individual functions to handle changing scenes
+    st.sidebar.button(label="Dashboard", help="Display general overview your account")
+    st.sidebar.button(label="RSI", help="Deploy RSI Crossover")
+    st.sidebar.button(label="Calendar", help="View Margins over the last month")
+    st.sidebar.button(label="Previous Trades", help="View Profits/Losses of previous trades")
+    st.sidebar.button(label="Profile", help="View/Edit Profile settings")
+  
+    graph1.header("""Trades\n""")
+    #build charts and puts on webpage of all stock events
+    #graph1.bokeh_chart(buildChartData(10000, '2y', "tradesOverTime"), use_container_width=True)
+    graph1.line_chart(buildChartData(10000, '2y', "tradesOverTime"), use_container_width=True, width=500)
+ 
+    graph2.header("""Account Value (USD)""")
+    #build charts and puts on webpage of all stock events
+    #graph2.bokeh_chart(buildChartData(10000, '2y', "accountValue"), use_container_width=True)
+    graph2.line_chart(buildChartData(10000, '2y', "accountValue"), use_container_width=True)
         
 
 #in the future this will be iterated upon based on user requests
