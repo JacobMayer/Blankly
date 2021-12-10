@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
-
+# put data into a dataframe for easy data reading and manipulation
 df = pd.read_csv('/home/nicholas/Downloads/bitcoin.csv')
 
 df['Date'] = pd.to_datetime(df['Date'])
@@ -22,14 +22,15 @@ df = df[(df['Date'].dt.year >= 2020)].copy()
 
 df['Close'] = df['Close'].shift(-1)
 
-df = df.iloc[33:] # Because of moving averages and MACD line
-df = df[:-1]      # Because of shifting close price
+df = df.iloc[33:] 
+df = df[:-1]      
 
 df.index = range(len(df))
 
 test_size  = 0.15
 valid_size = 0.15
 
+#splits the data into train, validation, and testing
 test_split_idx  = int(df.shape[0] * (1-test_size))
 valid_split_idx = int(df.shape[0] * (1-(valid_size+test_size)))
 
@@ -45,6 +46,7 @@ test_df   = df.loc[test_split_idx+1:].copy()
 #fig.add_trace(go.Scatter(x=test_df.Date,  y=test_df.Close,  name='Test'))
 #fig.show()
 
+#collumns to drop to get the target values of 'Close']
 drop_cols = ['Date', 'Volume', 'Open', 'Low', 'High', 'Market Cap']
 
 train_df = train_df.drop(drop_cols, 1)
@@ -62,9 +64,12 @@ X_test  = test_df.drop(['Close'], 1)
 
 
 eval_set = [(X_train, y_train), (X_valid, y_valid)]
+
+#creates the xgboost model and trains it on the evaluation set 
 model = xgb.XGBRegressor(eval_set=eval_set, objective='reg:squarederror', verbose=False)
 model.fit(X_train, y_train, eval_set=eval_set, verbose=False)
 
+#model predicts values using the testing dataset
 y_pred = model.predict(X_test)
 print(f'y_true = {np.array(y_test)[:5]}')
 print(f'y_pred = {y_pred[:5]}')
@@ -74,7 +79,7 @@ predicted_prices['Close'] = y_pred
 
 print(f'mean_squared_error = {mean_squared_error(y_test, y_pred)}')
 
-
+#plots the final prediction trend lines
 fig = make_subplots(rows=2, cols=1)
 fig.add_trace(go.Scatter(x=df.Date, y=df.Close,
                          name='Truth',
