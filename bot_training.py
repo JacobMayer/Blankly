@@ -15,9 +15,11 @@ from stable_baselines.common.vec_env import DummyVecEnv
 
 import matplotlib.pyplot as plt
 from stable_baselines.deepq.policies import MlpPolicy
+from stable_baselines.common.policies import MlpPolicy
 
 
 #df = gym_bot_trading.datasets.bitcoin_dataset.copy()
+#change based on how many CPU's your system can run
 n_cpu = 4
 window_size = 10
 start_index = window_size
@@ -30,9 +32,16 @@ env_maker = lambda: gym.make(
     window_size = window_size,
     frame_bound = (start_index, end_index)
 )
+#uncomment to make multiple environments to speed up training. Might not work on certain DRL algorithms
 #env = DummyVecEnv([env_maker for _ in range(n_cpu)])
 env = DummyVecEnv([env_maker])
 
+#uncomment to use Proximinal Policy Optimization
+#model = PPO2(MlpPolicy, env, verbose=1)
+#model.learn(total_timesteps=20000)
+
+
+#uncomment to use Deep Q RL algorithm
 #policy_kwargs = dict(net_arch=[64, 'lstm', dict(vf=[128, 128, 128], pi=[64, 64])])
 #model = DQN('MlpPolicy', env, verbose=1)
 #model = DQN(policy='MlpPolicy',env=env, verbose=1,
@@ -41,6 +50,7 @@ env = DummyVecEnv([env_maker])
    #          exploration_final_eps= 1)
 #model.learn(total_timesteps=50000)
 
+#Advantage Actor Critic RL algorithm
 env = DummyVecEnv([env_maker])
 policy_kwargs = dict(net_arch=[64, 'lstm', dict(vf=[128, 128, 128], pi=[64, 64])])
 model = A2C('MlpLstmPolicy', env, verbose=1, policy_kwargs=policy_kwargs)
@@ -61,20 +71,6 @@ while True:
     if done:
         print("info:", info)
         break
-
-'''
-while True:
-    observation = observation[np.newaxis, ...]
-
-    # action = env.action_space.sample()
-    action, _states = model.predict(observation)
-    observation, reward, done, info = env.step(action)
-
-    # env.render()
-    if done:
-        print("info:", info)
-        break
-'''
 
 plt.figure(figsize=(16, 6))
 env.render_all()
