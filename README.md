@@ -22,7 +22,7 @@ Step 5: You can change s.backtest to change initial account values, and the time
 
 ### Running bot without API for quick developmental changes: 
 
-# Trading_bot_rienforcement
+# Trading_bot_reinforcement
 System:
 - Ubuntu 16.04
 - GPU (GeForce GTX 1080 Ti)
@@ -46,7 +46,7 @@ git clone https://github.com/nickhward/Trading_bot_rienforcement.git
 
 Run the setup script to install required dependencies.
 ```
-cd ~/Trading_bot_rienforcement
+cd ~/Trading_bot_reinforcement
 pip3 install -e .
 ```
 
