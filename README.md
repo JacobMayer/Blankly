@@ -17,7 +17,7 @@ The Blankly repository was used to implement the API calls, visualize data and c
 
 In the reinforcement learning branch, gym trading environments were created from [gym_anytrading](https://github.com/AminHP/gym-anytrading)
 
-The reinforcment models were developed by [OpenAI](https://github.com/openai/baselines)
+The reinforcement models were developed by [OpenAI](https://github.com/openai/baselines)
 
 ## Justin Carlson's Contributions
 Justin was responsible for designing UI and modeling the data into an easy-to-read graphic format for the user. 
