@@ -32,4 +32,4 @@ Jake was responsible for implementing the trading strategies such as RSI and MAC
 
 
 ## Nicholas Ward Contributions
-Nicholas was responsible for creating the Reinforcement Learning machine learning method into the trading bot.
+Nicholas was responsible for creating the Reinforcement Learning and XGB machine learning methods into the trading bot.
