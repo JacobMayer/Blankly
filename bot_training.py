@@ -56,7 +56,7 @@ policy_kwargs = dict(net_arch=[64, 'lstm', dict(vf=[128, 128, 128], pi=[64, 64])
 model = A2C('MlpLstmPolicy', env, verbose=1, policy_kwargs=policy_kwargs)
 model.learn(total_timesteps=(100000))
 
-
+model.save('tradingbot_model')
 env = env_maker()
 observation = env.reset()
 
