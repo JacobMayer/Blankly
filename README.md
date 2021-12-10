@@ -13,7 +13,7 @@ Team 28 is soley responsible for developing the user interface used in this proj
 Reinforcement learning training [bot](https://github.com/JacobMayer/Blankly/blob/NicholasWard-RienforcementLearning/bot_training.py) python file created functionality for multiple different rienforcement learning algorithms as well as the ability for multiple cpu support, and model saving capabilities.
 
 ## Code Integrated From Other Sources
-The creation of the graphs was integrated from other sources.
+The Blankly repository was used to implement the API calls, visualize data and calculate return on investment as well as trade across multiple exchanges
 
 In the rienforcement learning branch, gym trading environments were created from [gym_anytrading](https://github.com/AminHP/gym-anytrading)
 
