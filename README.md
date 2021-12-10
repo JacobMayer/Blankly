@@ -12,7 +12,7 @@ Justin was responsible for designing UI and modeling the data into an easy-to-re
 
 
 ## Zimuzo Agu's Contributions
-Zimuzo was responsible for desgigning the Long Short Term Memory (LSTM) Machine Learning Algorithm into the program.
+Zimuzo was responsible for designing the Long Short Term Memory (LSTM) Machine Learning Algorithm into the program.
 
 
 ## Jake Mayer's Contributions
