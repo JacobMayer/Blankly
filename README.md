@@ -10,12 +10,12 @@ The goals and actual implementations of this project are currently as follows:
 ## Code Developed By Team 28
 Team 28 is soley responsible for developing the user interface used in this projects as well as the machine learning models and the trading strategies.
 
-Reinforcement learning training [bot](https://github.com/JacobMayer/Blankly/blob/NicholasWard-RienforcementLearning/bot_training.py) python file created functionality for multiple different rienforcement learning algorithms as well as the ability for multiple cpu support, and model saving capabilities.
+Reinforcement learning training [bot](https://github.com/JacobMayer/Blankly/blob/NicholasWard-RienforcementLearning/bot_training.py) python file created functionality for multiple different reinforcement learning algorithms as well as the ability for multiple cpu support, and model saving capabilities.
 
 ## Code Integrated From Other Sources
 The Blankly repository was used to implement the API calls, visualize data and calculate return on investment as well as trade across multiple exchanges
 
-In the rienforcement learning branch, gym trading environments were created from [gym_anytrading](https://github.com/AminHP/gym-anytrading)
+In the reinforcement learning branch, gym trading environments were created from [gym_anytrading](https://github.com/AminHP/gym-anytrading)
 
 ## Justin Carlson's Contributions
 Justin was responsible for designing UI and modeling the data into an easy-to-read graphic format for the user. 
