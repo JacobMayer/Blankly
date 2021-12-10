@@ -13,7 +13,7 @@ Team 28 is soley responsible for developing the user interface used in this proj
 ## Code Integrated From Other Sources
 The creation of the graphs was integrated from other sources.
 
-In the rienforcement learning branch, gym trading environment was created from [gym_anytrading](https://github.com/AminHP/gym-anytrading)
+In the rienforcement learning branch, gym trading environments were created from [gym_anytrading](https://github.com/AminHP/gym-anytrading)
 
 ## Justin Carlson's Contributions
 Justin was responsible for designing UI and modeling the data into an easy-to-read graphic format for the user. 
