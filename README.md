@@ -2,7 +2,18 @@
 
 
 ### Bot on its own training on Bitcoin data
+Must have python3.7+ for Blankly to work...
 
+To run bot clone this branch:
+```
+cd 
+git clone https://github.com/JacobMayer/Blankly.git
+```
+Then type the following:
+```
+cd ~/Blankly
+python xgboost.py
+```
 
 The image bellow is the data split into training, validation, and testing.
 
