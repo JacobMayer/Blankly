@@ -6,6 +6,8 @@ from blankly.utils import trunc
 from blankly.indicators import macd, sma, rsi
 import blankly as blankly
 import numpy as np
+import altair as alt
+from datetime import datetime
 
 # Streamlit Imports
 import streamlit as st
@@ -123,72 +125,72 @@ def addStockEvent(stock, resolution, init):
     s.add_price_event(price_event, stock, resolution, init)
     return
 
-def buildChartData(amount, duration, type):
+def getBacktestInfo(amount, duration, type):
 
     backTestCallback = s.backtest(initial_values={'USD': amount}, to=duration)
 
-    #infoFigure = figure()
+    return backTestCallback
 
-    time = []
-    value = []
+def generateDateFromUnix(unix):
 
-    if (type == "accountValue"):
-        backTestAcctInfo = backTestCallback.get_account_history()
+    index = unix.index
+    number_of_rows = len(index)
+    
+    newDates = []
 
-        time = backTestAcctInfo['time']#.tolist()
-        value = backTestAcctInfo['USD']#.tolist()
-
-        #infoFigure = figure(
-        #title='Account Value (USD)',
-        #x_axis_label='Time',
-        #x_axis_type='datetime',
-        #y_axis_label='Value (USD)')
-
-    if (type == "tradesOverTime"):
-        backTestAcctInfo = backTestCallback.get_account_history()
-
-        stockName = 'TSLA' # will have to be dynamic at one point
-
-        time = backTestAcctInfo['time']#.tolist()
-        value = backTestAcctInfo[stockName]#.tolist()
-
-        #infoFigure = figure(
-        #title='Shares owned ' + "(" + stockName + ")",
-        #x_axis_label='Time',
-        #x_axis_type='datetime',
-        #y_axis_label='Shares ' + "(" + stockName + ")"
-        #)
-
-    #infoFigure.line(time, value, legend_label='Trend', line_width=2)
-
-    infoFigure = value
-    print(infoFigure)
-    return infoFigure
+    for i in range(number_of_rows):
+        newValue = datetime.utcfromtimestamp(int(unix.at[i, 'time'])).strftime('%Y-%m-%d %H:%M:%S')
+        newDates.append(newValue)
+    unix.insert(0, 'date', newDates)
+    return unix
 
 def buildDashboard():
    
     graph1, graph2 = st.columns(2)
 
+    backTestCallback = getBacktestInfo(10000, '2y', "tradesOverTime")
+
     # will require individual functions to handle changing scenes
+    tradeInfo = backTestCallback.get_account_history()
+    tradeInfo = generateDateFromUnix(tradeInfo)
+    graph1.header("""Shares\n""")
+    chart1 = alt.Chart(tradeInfo).mark_line().encode(x=alt.X('date:T', axis=alt.Axis(tickCount=5)), y='TSLA')
+    graph1.altair_chart(chart1, use_container_width=True)
+    graph1.write("Current Shares: " + str(tradeInfo['TSLA'].iloc[-1]))
+
+
+    #build info table under graph1
+    data_items = backTestCallback.get_metrics().items()
+    data_list = list(data_items)
+    df = pd.DataFrame(data_list)
+    graph1.write("# Metrics")
+    graph1.table(df)
+
+
+    accountValue = backTestCallback.get_returns()
+    accountValue = generateDateFromUnix(accountValue)
+    graph2.header("""Account Value (USD)""")
+    chart2 = alt.Chart(tradeInfo).mark_line().encode(x=alt.X('date:T', axis=alt.Axis(tickCount=5)), y='USD')
+    graph2.altair_chart(chart2, use_container_width=True)
+    graph2.write("Current Account Value: " + str(tradeInfo['USD'].iloc[-1]))
+
+def sideBarButtonPressed(): # this is setting up for future use and actually having fully functional buttons
+    buildDashboard()
+    return
+
+def initSidebar():
     st.sidebar.button(label="Dashboard", help="Display general overview your account")
     st.sidebar.button(label="RSI", help="Deploy RSI Crossover")
     st.sidebar.button(label="Calendar", help="View Margins over the last month")
     st.sidebar.button(label="Previous Trades", help="View Profits/Losses of previous trades")
     st.sidebar.button(label="Profile", help="View/Edit Profile settings")
-  
-    graph1.header("""Trades\n""")
-    #build charts and puts on webpage of all stock events
-    #graph1.bokeh_chart(buildChartData(10000, '2y', "tradesOverTime"), use_container_width=True)
-    graph1.line_chart(buildChartData(10000, '2y', "tradesOverTime"), use_container_width=True, width=500)
- 
-    graph2.header("""Account Value (USD)""")
-    #build charts and puts on webpage of all stock events
-    #graph2.bokeh_chart(buildChartData(10000, '2y', "accountValue"), use_container_width=True)
-    graph2.line_chart(buildChartData(10000, '2y', "accountValue"), use_container_width=True)
-        
+
+    sideBarButtonPressed()
+    return
+
 
 #in the future this will be iterated upon based on user requests
 addStockEvent('TSLA', '1d', init)
 
 #build user interface on webpage
-buildDashboard()
+initSidebar()
