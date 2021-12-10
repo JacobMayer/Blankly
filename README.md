@@ -10,7 +10,7 @@ The goals and actual implementations of this project are currently as follows:
 ## Code Developed By Team 28
 Team 28 is soley responsible for developing the user interface used in this projects as well as the machine learning models and the trading strategies.
 
-Reinforcement learning training [bot](https://github.com/JacobMayer/Blankly/blob/NicholasWard-RienforcementLearning/bot_training.py) python file created functionality for multiple different rienforcement learning algorithms as well as the ability for multiple cpu support.
+Reinforcement learning training [bot](https://github.com/JacobMayer/Blankly/blob/NicholasWard-RienforcementLearning/bot_training.py) python file created functionality for multiple different rienforcement learning algorithms as well as the ability for multiple cpu support, and model saving capabilities.
 
 ## Code Integrated From Other Sources
 The creation of the graphs was integrated from other sources.
