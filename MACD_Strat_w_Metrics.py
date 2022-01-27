@@ -78,18 +78,12 @@ def price_event(price, symbol, state: StrategyState):
     macd_strat(variables, interface, symbol, price)
     #rsi_strat(variables, interface, symbol, price, state)
 
-	#return metrics such as CAGR, Cumulative returns etc, along with account history.
-def backtest_metrics(backtest_data):
-    returns = backtest_data['returns']['value']
-    return sortino(returns) + sharpe(returns)
-      
-    
-
 alpaca = Alpaca()
 s = Strategy(alpaca)
 s.add_price_event(price_event, 'SPY', resolution='1d', init=init)
-result = s.backtest(initial_values={'USD': 10000}, to='2y',
-                    callbacks=[backtest_metrics])
+result = s.backtest(initial_values={'USD': 10000}, to='2y')
+
+                  
 print(result)
 
 
