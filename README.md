@@ -1,3 +1,14 @@
+# How to use this Branch
+To run app, enter command into terminal: 
+   `python3 account_ml.py`
+   
+You should see a page like this:
+![image](https://user-images.githubusercontent.com/78880630/154600557-54e16259-09aa-40eb-8013-849f52a06e84.png)
+
+
+
+
+
 # Trading Bot
 
 The goals and actual implementations of this project are currently as follows:  
