@@ -1,0 +1,235 @@
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+.logo {
+  line-height: 1;
+  @media (min-width: 1200px) {
+    width: 280px;
+  }
+
+  img {
+    max-height: 26px;
+    margin-right: 6px;
+  }
+
+  span {
+    font-size: 26px;
+    font-weight: 700;
+    color: $secondary;
+    font-family: $font-primary;
+  }
+
+}
+
+.header {
+  transition: all 0.5s;
+  z-index: 997;
+  height: 60px;
+  box-shadow: 0px 2px 20px rgba($secondary, 0.10);
+  background-color: #fff;
+  padding-left: 20px;
+
+  /* Toggle Sidebar Button */
+  .toggle-sidebar-btn {
+    font-size: 32px;
+    padding-left: 10px;
+    cursor: pointer;
+    color: $secondary;
+  }
+
+  /* Search Bar */
+
+  .search-bar {
+    min-width: 360px;
+    padding: 0 20px;
+  }
+
+  @media (max-width: 1199px) {
+    .search-bar {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      box-shadow: 0px 0px 15px 0px rgba($secondary, 0.1);
+      background: lighten($primary, 58);
+      z-index: 9999;
+      transition: 0.3s;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .search-bar-show {
+      top: 60px;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .search-form {
+    width: 100%;
+    input {
+      border: 0;
+      font-size: 14px;
+      color: $secondary;
+      border: 1px solid rgba($secondary, .2);
+      padding: 7px 38px 7px 8px;
+      border-radius: 3px;
+      transition: 0.3s;
+      width: 100%;
+      &:focus, &:hover {
+        outline: none;
+        box-shadow: 0 0 10px 0 rgba($secondary, 0.15);
+        border: 1px solid rgba($secondary, .3);
+      }
+    }
+
+    button {
+      border: 0;
+      padding: 0;
+      margin-left: -30px;
+      background: none;
+      i {
+        color: $secondary;
+      }
+    }
+  }
+
+}
+
+/*--------------------------------------------------------------
+# Header Nav
+--------------------------------------------------------------*/
+.header-nav {
+  ul {
+    list-style: none;
+  }
+  
+  > ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-icon {
+    font-size: 20px;
+    color: $secondary;
+  }
+
+  .nav-profile {
+    color: $secondary;
+    img {
+      max-height: 36px;
+    }
+    span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+  .badge-number {
+    position: absolute;
+    inset: 4px 6px auto auto;
+    font-weight: normal;
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .notifications {
+
+    .notification-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 10px;
+      transition: 0.3s;
+
+      i {
+        margin: 0 20px 0 10px;
+        font-size: 24px;
+      }
+
+      h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      p {
+        font-size: 13px;
+        margin-bottom: 3px;
+        color: lighten($default, 30);
+      }
+
+      &:hover {
+        background-color: lighten($secondary, 76);
+      }
+    }
+
+  }
+
+  .messages {
+
+    .message-item {
+      padding: 15px 10px;
+      transition: 0.3s;
+      
+      a {
+        display: flex;
+      }
+
+      img {
+        margin: 0 20px 0 10px;
+        max-height: 40px;
+      }
+
+      h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: $default;
+      }
+
+      p {
+        font-size: 13px;
+        margin-bottom: 3px;
+        color: lighten($default, 30);
+      }
+
+      &:hover {
+        background-color: lighten($secondary, 76);
+      }
+    }
+  }
+
+  .profile {
+    min-width: 240px;
+    padding-bottom: 0;
+
+    .dropdown-header {
+      h6 {
+        font-size: 18px;
+        margin-bottom: 0;
+        font-weight: 600;
+        color: $default;
+      }
+      span {
+        font-size: 14px;
+      }
+    }
+
+    .dropdown-item {
+      font-size: 14px;
+      padding: 10px 15px;
+      transition: 0.3s;
+      i {
+        margin-right: 10px;
+        font-size: 18px;
+        line-height: 0;
+      }
+      &:hover {
+        background-color: lighten($secondary, 76);
+      }
+    }
+
+  }
+
+}
