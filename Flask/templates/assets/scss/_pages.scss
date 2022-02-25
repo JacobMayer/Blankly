@@ -1,0 +1,270 @@
+/*--------------------------------------------------------------
+# Icons list page
+--------------------------------------------------------------*/
+.iconslist {
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  padding-top: 15px;
+
+  .icon {
+    background-color: #fff;
+    border-radius: .25rem;
+    text-align: center;
+    color: #012970;
+    padding: 15px 0;
+  }
+
+  i {
+    margin: .25rem;
+    font-size: 2.5rem;
+  }
+
+  .label {
+    font-family: var(--bs-font-monospace);
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    padding: .25rem;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #666;
+  }
+
+}
+
+/*--------------------------------------------------------------
+# Profie Page
+--------------------------------------------------------------*/
+.profile {
+
+  .profile-card {
+    img {
+      max-width: 120px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: $tertiary;
+      margin: 10px 0 0 0;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    .social-links {
+      a {
+        font-size: 20px;
+        display: inline-block;
+        color: rgba($secondary, .5);
+        line-height: 0;
+        margin-right: 10px;
+        transition: 0.3s;
+        &:hover {
+          color: rgba($secondary,  1);
+        }
+      }
+    }
+  }
+
+  .profile-overview {
+    .row {
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .card-title {
+      color: $secondary;
+    }
+    
+    .label {
+      font-weight: 600;
+      color: rgba($secondary, .6);
+    }
+  }
+
+  .profile-edit {
+    
+    label {
+      font-weight: 600;
+      color: rgba($secondary, .6);
+    }
+
+    img {
+      max-width: 120px;
+    }
+  }
+
+}
+
+/*--------------------------------------------------------------
+# F.A.Q Page
+--------------------------------------------------------------*/
+.faq {
+
+  .basic {
+    h6 {
+      font-size: 18px;
+      font-weight: 600;
+      color: $primary;
+    }
+
+    p {
+      color: lighten($tertiary, 30);
+    }
+  }
+
+}
+
+
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+.contact {
+
+  .info-box {
+    padding: 28px 30px;
+    i {
+      font-size: 38px;
+      line-height: 0;
+      color: $primary;
+    }
+
+    h3 {
+      font-size: 20px;
+      color: $secondary;
+      font-weight: 700;
+      margin: 20px 0 10px 0;
+    }
+
+    p {
+      padding: 0;
+      line-height: 24px;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+  }
+
+  .php-email-form {
+
+    .error-message {
+      display: none;
+      color: #fff;
+      background: #ed3c0d;
+      text-align: left;
+      padding: 15px;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .sent-message {
+      display: none;
+      color: #fff;
+      background: #18d26e;
+      text-align: center;
+      padding: 15px;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .loading {
+      display: none;
+      background: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-bottom: 24px;
+  
+      &:before {
+        content: "";
+        display: inline-block;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        margin: 0 10px -6px 0;
+        border: 3px solid #18d26e;
+        border-top-color: #eee;
+        animation: animate-loading 1s linear infinite;
+      }
+  
+    }
+
+    input, textarea {
+      border-radius: 0;
+      box-shadow: none;
+      font-size: 14px;
+      border-radius: 0;
+      &:focus {
+        border-color: $primary;
+      }
+    }
+
+    input {
+      padding: 10px 15px;
+    }
+
+    textarea {
+      padding: 12px 15px;
+    } 
+
+    button[type="submit"] {
+      background: $primary;
+      border: 0;
+      padding: 10px 30px;
+      color: #fff;
+      transition: 0.4s;
+      border-radius: 4px;
+      &:hover {
+        background: lighten($primary, 5);
+      }
+    }
+  
+  }
+  
+  @keyframes animate-loading {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+/*--------------------------------------------------------------
+# Error 404
+--------------------------------------------------------------*/
+.error-404 {
+  padding: 30px;
+
+  h1 {
+    font-size: 180px;
+    font-weight: 700;
+    color: $primary;
+    margin-bottom: 0;
+    line-height: 150px;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: $secondary;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    background: lighten($tertiary, 20);
+    color: #fff;
+    padding: 8px 30px;
+    &:hover {
+      background: lighten($tertiary, 10);
+    }
+  }
+
+  @media (min-width: 992px) {
+    img {
+      max-width: 50%;
+    }
+  }
+
+}
