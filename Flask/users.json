@@ -1,1 +1,1 @@
-{"username": "test", "email": null, "password": "test"}
+{"accounts": [{"username": "justin carlson", "email": "test@gmail.com", "password": "test", "token": "31fca27d-d8fa-4262-a41e-78638e22e595"}]}
