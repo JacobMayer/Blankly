@@ -5,6 +5,20 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+  
+
+
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+
   <title>Trading Models - Project Passive Income</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -41,7 +55,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
+  
 </head>
 
 <body>
@@ -297,13 +311,6 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/buy-sell">
-          <i class="bi bi-gem"></i>
-          <span>Buy/Sell</span>
-        </a>
-      </li><!-- End buysell Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link " href="/profile">
           <i class="bi bi-person"></i>
           <span>Profile</span>
@@ -329,6 +336,8 @@
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
+    
+
     <div class="pagetitle">
       <h1>Trading Bot</h1>
       <nav>
@@ -404,7 +413,7 @@
      </script>
 
 
-      <ul class="nav nav-pills justify-content-center mb-3" id="pills-tab" role="tablist">
+      <ul class="nav nav-pills text-center mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
           <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
         </li>
@@ -412,15 +421,13 @@
           <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">XGBOOST</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">RSI</button>
+          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">MLP</button>
         </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-other-tab" data-bs-toggle="pill" data-bs-target="#pills-other" type="button" role="tab" aria-controls="pills-other" aria-selected="false">MACD</button>
-        </li>
+        
       </ul>
       <form method="post">
       <div class="tab-content justify-content-center" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="tab-pane justify-content-center fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
           <h3>How to use trading bot</h3>
             <ol>
               <li>First select which trading strategy you want to use</li>
@@ -429,32 +436,33 @@
             </ol>
 
         </div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-          <img src="assets/img/xgboost-v2.png" >
+        <div class="tab-pane text-center fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          
 
-          <div class="form-group">
-            <label for="exampleInputEmail1">Ticker</label>
-            <input type="text" name="textinfo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter ticker you want to use">
-            <small id="emailHelp" class="form-text text-muted">Ticker ticker ticker ticker</small>
+          <div class="form-group text-center">
+            <label for="tickerInput1">
+              <h1>Extreme Gradient Boosting</h1>
+              Clicking submit after entering your ticker of choice will allow you to use the XGBOOST trading bot</label>
+            <input type="text" name="textinfo" class="form-control text-center" id="tickerInput1" aria-describedby="ticker" placeholder="Enter Ticker">
+            <input type="text" name="totalamount" class="form-control text-center" id="totalamount" aria-describedby="amount" placeholder="Enter Amount To Trade With">
+            <small id="ticker" class="form-text text-muted text-center"></small>
           </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-          </div>
+          
           <button type="submit" name="submit_button1" class="btn btn-primary" value="submit_it">Submit</button>
         </div>
 
 
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Ticker</label>
-            <input type="text" name="textinfo2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter ticker">
-            <small id="emailHelp" class="form-text text-muted">Ticker ticker ticker ticker</small>
+        <div class="tab-pane text-center fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          
+          <div class="form-group text-center">
+            <label for="tickerInput1">
+              <h1>Multilayer Perceptron</h1>
+              Clicking submit after entering your ticker of choice will allow you to use the MLP trading bot</label>
+            <input type="text" name="textinfo2" class="form-control text-center" id="tickerInput1" aria-describedby="ticker" placeholder="Enter Ticker">
+            <input type="text" name="totalamount2" class="form-control text-center" id="totalamount2" aria-describedby="amount2" placeholder="Enter Amount To Trade With">
+            <small id="ticker" class="form-text text-muted text-center"></small>
           </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-          </div>
+          
           <button type="submit" name="submit_button1" class="btn btn-primary" value="submit_it2" >Submit</button>
         </div>
         </div>
@@ -538,7 +546,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-metrics">Metrics</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-metrics">Graphs</button>
                 </li>
 
                 <li class="nav-item">
@@ -644,9 +652,19 @@
                   </script>
                   <div id="includedContent"></div>
 
+                 <div class="bokeh text-center">
                   {%if ran_bool == 1%}
-                  <img src="assets/img/plot_trade.png" >
+                    {{ script | safe }}
+
+                    {% for item in div %}
+                    {{ item | safe }}
+                    {% endfor %}
+                    
+            
+                  
+                  
                   {%endif%}
+                </div>
 
                 </div>
 

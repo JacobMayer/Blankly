@@ -158,6 +158,7 @@ def trading_models():
     ran_bool = 0
     alpaca = Alpaca()
     s = Strategy(alpaca)
+
     token = request.cookies.get('token')
     if (os.path.isfile('users.json')):
         user = getUserFromToken(token)
@@ -166,31 +167,42 @@ def trading_models():
             #ticker = request.form.get('nick')
                 if request.form['submit_button1'] == 'submit_it':
                     ticker = request.form['textinfo']
+                    amount = int(request.form['totalamount'])
+
                     ran_bool = 1
                     # creating an init allows us to run the same function for
                     # different tickers and resolutions
-                    s.add_price_event(price_event, ticker, resolution='1d', init=init)
+                    s.add_price_event(price_event_xgboost, ticker, resolution='1d', init=init_xgboost)
 
-                    variable = s.backtest('2y', {'USD': 10000})
+                    variable = s.backtest('2y', {'USD': amount})
+                    #variable.figures[0]
+                    #script, div = components(variable.figures[0])
+                    #script2, div2 = components(variable.figures[1])
+                    #script3, div3 = components(variable.figures[2])
+                    script, div = components(variable.figures)
                     global history
+                    #print (script)
                     metrics = variable.get_metrics()
                     metrics = { x.translate({32:None}) : y
                          for x, y in metrics.items()}
-                    return render_template('pages-models.html', metrics=metrics, ran_bool=ran_bool, strategy='XGBOOST')
+                    return render_template('pages-models.html', script=script, div=div, metrics=metrics, ran_bool=ran_bool, strategy='XGBOOST')
                 if request.form['submit_button1'] == 'submit_it2':
                     ticker = request.form['textinfo2']
+                    amount = int(request.form['totalamount2'])
                     ran_bool = 1
+
                     # creating an init allows us to run the same function for
                     # different tickers and resolutions
-                    s.add_price_event(price_event, ticker, resolution='1d', init=init)
+                    s.add_price_event(price_event_mlp, ticker, resolution='1d', init=init_mlp)
 
-                    variable = s.backtest(initial_values={'USD': 10000}, to='2y')
+                    variable = s.backtest('2y', {'USD': amount})
+                    script, div = components(variable.figures)
                     #variable.figures[2]
                     global history
                     metrics = variable.get_metrics()
                     metrics = { x.translate({32:None}) : y
                          for x, y in metrics.items()}
-                    return render_template('pages-models.html', metrics=metrics, ran_bool=ran_bool, strategy='RSI')
+                    return render_template('pages-models.html', script=script, div=div, metrics=metrics, ran_bool=ran_bool, strategy='MLP')
             return render_template('pages-models.html', ran_bool=ran_bool)
     return redirect("/login")
 
@@ -262,7 +274,7 @@ def register():
 
 ########## Blankly Dependencies Begins ##########
 
-def init(symbol, state: StrategyState):
+def init_xgboost(symbol, state: StrategyState):
     interface: Interface = state.interface
     resolution = state.resolution
     variables = state.variables
@@ -274,7 +286,7 @@ def init(symbol, state: StrategyState):
     variables['history'] = interface.history(symbol, 300, resolution, return_as='list')['close']
     variables['has_bought'] = False
 
-def price_event(price, symbol, state: StrategyState):
+def price_event_xgboost(price, symbol, state: StrategyState):
     interface: Interface = state.interface
     variables = state.variables
 
@@ -304,6 +316,49 @@ def price_event(price, symbol, state: StrategyState):
     global history
     history = variables['history']
 
+
+
+def init_mlp(symbol, state: StrategyState):
+    interface: Interface = state.interface
+    resolution = state.resolution
+    variables = state.variables
+    x, y = make_classification(n_samples=500, n_features=3, n_informative=3, n_redundant=0, random_state=1)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=1)
+    # initialize the historical data
+    #variables['model'] = xgboost.XGBClassifier().fit(x_train, y_train)
+    variables['model'] = MLPClassifier(random_state=1, max_iter=10000).fit(x_train, y_train)
+    variables['history'] = interface.history(symbol, 300, resolution, return_as='list')['close']
+    variables['has_bought'] = False
+
+def price_event_mlp(price, symbol, state: StrategyState):
+    interface: Interface = state.interface
+    variables = state.variables
+
+    variables['history'].append(price)
+    model = variables['model']
+    scaler = MinMaxScaler()
+    rsi_values = rsi(variables['history'], period=14).reshape(-1, 1)
+    rsi_value = scaler.fit_transform(rsi_values)[-1]
+
+    ma_values = sma(variables['history'], period=50).reshape(-1, 1)
+    ma_value = scaler.fit_transform(ma_values)[-1]
+
+    ma100_values = sma(variables['history'], period=100).reshape(-1, 1)
+    ma100_value = scaler.fit_transform(ma100_values)[-1]
+    value = np.array([rsi_value, ma_value, ma100_value]).reshape(1, 3)
+    prediction = model.predict_proba(value)[0][1]
+    #print(prediction)
+    # comparing prev diff with current diff will show a cross
+    if prediction > 0.4 and not variables['has_bought']:
+        interface.market_order(symbol, 'buy', trunc(interface.cash/price, 8))
+        variables['has_bought'] = True
+    elif prediction <= 0.4 and variables['has_bought']:
+        # truncate is required due to float precision
+        interface.market_order(symbol, 'sell', interface.account[state.base_asset]['available'])
+        variables['has_bought'] = False
+
+    global history
+    history = variables['history']
 
 ########## Blankly Dependencies Ends ##########
 
