@@ -87,18 +87,27 @@ def home():
     if (os.path.isfile('users.json')):
         user = getUserFromToken(token)
         if user:
+            updateRevenue()
+
+            user = getUserFromToken(token) #get most recent data
 
             tickerInfo = []
             tickercount = 0
-            for ticker, amount in getUserFromToken(token)['tickers'].items():
+            for ticker, amount in user['tickers'].items():
                 tickercount += amount
                 tickerInfo.append({"value" : amount, "name" : ticker})
 
-            return render_template("index.html", user=getUserFromToken(token)['username'], 
-                revenue=getUserFromToken(token)['revenue'],
+            return render_template("index.html", user=user['username'], 
+                revenue=user['revenue'],
                 tickers=tickerInfo,
-                tickerCount=tickercount)
+                tickerCount=tickercount,
+                trades=user['trades'],
+                percentChange=user['percentChange'])
     return redirect("/login")
+
+@app.route("/index.html")
+def home2():
+    return redirect("/")
 
 #Profile page
 @app.route("/profile")
@@ -144,10 +153,10 @@ def buysell():
                 if (request.form.get('tickerNameSell') != ''):
                     sellTicker(request.form.get('tickerNameSell'), request.form.get('tickerAmountSell'))
 
+            user = getUserFromToken(token)
             tickerInfo = []
             for ticker, amount in user['tickers'].items():
                 tickerInfo.append({"value" : amount, "name" : ticker})
-            print(tickerInfo)
             return render_template("pages-buy-sell.html", user=getUserFromToken(token)['username'], tickers=tickerInfo)
     return redirect("/login")
 
@@ -246,7 +255,10 @@ def register():
             "email" : request.form.get('email'),
             "password" : request.form.get('password'),
             "revenue" : "100000",
-            "tickers" : {"AAPL" : 55, "TSLA": 64}
+            "tickers" : {"AAPL" : 55, "TSLA": 64},
+            "tradeHistory" : {},
+            "trades" : 0,
+            "percentChange" : 1
         }
 
         if (os.path.isfile('users.json')):
@@ -362,6 +374,43 @@ def price_event_mlp(price, symbol, state: StrategyState):
 
 ########## Blankly Dependencies Ends ##########
 
+#import yfinance as yf
+import requests
+import time
+
+from bs4 import BeautifulSoup
+
+def stock_price(symbol):
+    url = f"https://finance.yahoo.com/quote/{symbol}/"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    class_ = "My(6px) Pos(r) smartphone_Mt(6px) W(100%)"
+    return soup.find("div", class_=class_).find("fin-streamer").text
+
+def updateRevenue():
+    if (os.path.isfile('users.json')):
+        token = request.cookies.get('token')
+        #load database
+        data = {}
+        with open("users.json", "r") as read_file:
+            data = json.load(read_file)
+        user = getUserFromToken(token)
+
+        newRevenue = 0
+        for users in data['accounts']:
+            if user == users:
+                for ticker, amount in user['tickers'].items():
+                    newRevenue += round(float(stock_price(ticker).replace(',', ""))  * int(amount), 2)
+
+                users['percentChange'] = round((newRevenue - float(users['revenue']))/(float(users['revenue'])) * 100, 2)
+
+                users['revenue'] = round(newRevenue, 2)
+
+        with open("users.json", "w") as out_file:
+            json.dump(data, out_file)
+
+    return
+
 def buyTicker(ticker, amount):
     token = request.cookies.get('token')
     if (os.path.isfile('users.json')):
@@ -377,6 +426,9 @@ def buyTicker(ticker, amount):
                  users['tickers'][ticker] += int(amount)
                 else:
                  users['tickers'][ticker] = int(amount)
+                users['trades'] += 1
+                users['tradeHistory'][int(time.time())] = {"type" : "buy", "amount" : amount, "ticker" : ticker}
+                
 
         with open("users.json", "w") as out_file:
             json.dump(data, out_file)
@@ -397,6 +449,8 @@ def sellTicker(ticker, amount):
                  users['tickers'][ticker] -= int(amount)
                  if (users['tickers'][ticker] <= 0):
                      users['tickers'].pop(ticker, None)
+                users['trades'] += 1
+                users['tradeHistory'][int(time.time())] = {"type" : "sell", "amount" : amount, "ticker" : ticker}
 
         with open("users.json", "w") as out_file:
             json.dump(data, out_file)
