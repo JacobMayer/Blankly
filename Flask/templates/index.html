@@ -519,51 +519,23 @@
                         <th scope="col">Time</th>
                         <th scope="col">Algorithm</th>
                         <th scope="col">Ticker</th>
+                        <th scope="col">Amount</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Buy/Sell</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {% for key in tradeHistory.keys() %}
                       <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td> Feb 01 1998 00:00:00 </td>
-                        <td><a href="#" class="text-primary">SKLearn Model</a></td>
-                        <td>MSFT</td>
-                        <td>$354</td>
-                        <td><span class="badge bg-success">Approved</span></td>
+                        <th scope="row"><a href="#"># {{ tradeHistory[key]['number']|tojson|safe }}</a></th>
+                        <td>{{ tradeHistory[key]['date'].strip('"')|tojson}}</td>
+                        <td><a href="#" class="text-primary">Manual</a></td>
+                        <td>{{ tradeHistory[key]['ticker']|tojson|safe }}</td>
+                        <td>{{ tradeHistory[key]['amount']|tojson|safe }}</td>
+                        <td>{{ tradeHistory[key]['price']|tojson|safe }}</td>
+                        <td><span class="badge bg-success">{{ tradeHistory[key]['type']|tojson|safe }}</span></td>
                       </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2169</a></th>
-                        <td> Feb 01 1998 00:00:00 </td>
-                        <td><a href="#" class="text-primary">Tkinter Model</a></td>
-                        <td>AAPL</td>
-                        <td>$265</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td> Feb 01 1998 00:00:00 </td>
-                        <td><a href="#" class="text-primary">MACD Strategy</a></td>
-                        <td>AMZN</td>
-                        <td>$3456</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2420</a></th>
-                        <td> Feb 01 1998 00:00:00 </td>
-                        <td><a href="#" class="text-primary">Death Cross</a></td>
-                        <td>AAPL</td>
-                        <td>$252</td>
-                        <td><span class="badge bg-danger">Rejected</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td> Feb 01 1998 00:00:00 </td>
-                        <td><a href="#" class="text-primary">RSI Strategy</a></td>
-                        <td>TSLA</td>
-                        <td>$654</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
 

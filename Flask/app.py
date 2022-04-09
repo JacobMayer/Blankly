@@ -102,7 +102,8 @@ def home():
                 tickers=tickerInfo,
                 tickerCount=tickercount,
                 trades=user['trades'],
-                percentChange=user['percentChange'])
+                percentChange=user['percentChange'],
+                tradeHistory=user['tradeHistory'])
     return redirect("/login")
 
 @app.route("/index.html")
@@ -147,7 +148,6 @@ def buysell():
         if user:
             if request.method == 'POST':
                 if (request.form.get('tickerNameBuy') != ''):
-                    print(request.form)
                     buyTicker(request.form.get('tickerNameBuy'), request.form.get('tickerAmountBuy'))
 
                 if (request.form.get('tickerNameSell') != ''):
@@ -377,6 +377,8 @@ def price_event_mlp(price, symbol, state: StrategyState):
 #import yfinance as yf
 import requests
 import time
+import datetime
+import random
 
 from bs4 import BeautifulSoup
 
@@ -427,7 +429,10 @@ def buyTicker(ticker, amount):
                 else:
                  users['tickers'][ticker] = int(amount)
                 users['trades'] += 1
-                users['tradeHistory'][int(time.time())] = {"type" : "buy", "amount" : amount, "ticker" : ticker}
+                now = datetime.datetime.now()
+                dateString = str(now.month) + " " + str(now.day) + " " + str(now.year) + " " + str(now.hour) + ":" + str(now.minute) + ":" + str(now.second)
+                price = round(float(stock_price(ticker).replace(',', ""))  * int(amount), 2)
+                users['tradeHistory'][int(time.time())] = {"type" : "BUY", "amount" : amount, "ticker" : ticker, "date" : dateString, "price" : price, "number" : random.randint(0,10000)}
                 
 
         with open("users.json", "w") as out_file:
@@ -450,7 +455,10 @@ def sellTicker(ticker, amount):
                  if (users['tickers'][ticker] <= 0):
                      users['tickers'].pop(ticker, None)
                 users['trades'] += 1
-                users['tradeHistory'][int(time.time())] = {"type" : "sell", "amount" : amount, "ticker" : ticker}
+                now = datetime.datetime.now()
+                dateString = str(now.month) + " " + str(now.day) + " " + str(now.year) + " " + str(now.hour) + ":" + str(now.minute) + ":" + str(now.second)
+                price = round(float(stock_price(ticker).replace(',', ""))  * int(amount), 2)
+                users['tradeHistory'][int(time.time())] = {"type" : "SELL", "amount" : amount, "ticker" : ticker, "date" : dateString, "price" : price, "number" : random.randint(0,10000)}
 
         with open("users.json", "w") as out_file:
             json.dump(data, out_file)
