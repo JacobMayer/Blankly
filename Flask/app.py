@@ -290,7 +290,6 @@ def register():
 
 @app.route('/reports')
 def reports():
-    print("sadasd")
     token = request.cookies.get('token')
     user = getUserFromToken(token)
     generateAccountReport(user)
@@ -492,7 +491,7 @@ def sellTicker(ticker, amount):
 ######### Reporting Analysis Begin ##########
 
 def generateAccountReport(user):
-    print("hello")
+
     with open("Reports/" + user['username'] + "_Report.csv", "w") as outfile:
         outfile.write("Current Net\n")
         outfile.write(str(user['revenue']) + "\n\n")
