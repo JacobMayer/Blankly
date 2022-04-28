@@ -1,0 +1,20 @@
+Current Net
+61701.41
+
+Total Trades
+7
+
+Owned Tickers, Amount
+TSLA,64
+GE,25
+AAPL,10
+Total,99
+Trade History
+Trade #,Date, Algorithm, Ticker, Amount, Price, Buy/Sell
+8182,4 8 2022 20:47:42,Manual,AAPL,15,2551.35,BUY
+4721,4 8 2022 20:47:47,Manual,GE,25,2243.5,BUY
+7127,4 8 2022 20:47:53,Manual,GME,46,6724.74,BUY
+9923,4 8 2022 20:48:5,Manual,AAPL,15,2551.35,SELL
+7577,4 15 2022 19:32:27,Manual,GME,46,6935.42,SELL
+3598,4 15 2022 19:32:40,Manual,AAPL,55,9090.95,SELL
+4269,4 15 2022 20:1:11,Manual,AAPL,10,1652.9,BUY

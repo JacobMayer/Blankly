@@ -1,5 +1,5 @@
 from sqlite3 import TimeFromTicks
-from flask import Flask, redirect, url_for, render_template, request, send_from_directory, make_response
+from flask import Flask, redirect, url_for, render_template, request, send_from_directory, make_response, send_file
 import json
 import numpy as np
 import os
@@ -81,7 +81,7 @@ def login():
         return render_template("pages-login.html")
 
 #Home page, dashboard page
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def home():
     token = request.cookies.get('token')
     if (os.path.isfile('users.json')):
@@ -96,6 +96,12 @@ def home():
             for ticker, amount in user['tickers'].items():
                 tickercount += amount
                 tickerInfo.append({"value" : amount, "name" : ticker})
+
+
+            if request.method == 'POST':
+                generateAccountReport(user)
+                print("hj")
+                return send_file(user['username'] + "_report.csv", as_attachment=True)
 
             return render_template("index.html", user=user['username'], 
                 revenue=user['revenue'],
@@ -282,6 +288,16 @@ def register():
 
     return render_template('pages-register.html', message=message)
 
+@app.route('/reports')
+def reports():
+    print("sadasd")
+    token = request.cookies.get('token')
+    user = getUserFromToken(token)
+    generateAccountReport(user)
+
+    return send_file("Reports/" + user['username'] + "_Report.csv", as_attachment=True)
+
+
 ########## Token login Ends ##########
 
 ########## Blankly Dependencies Begins ##########
@@ -374,6 +390,10 @@ def price_event_mlp(price, symbol, state: StrategyState):
 
 ########## Blankly Dependencies Ends ##########
 
+
+
+######### Stock buying and selling begin #######
+
 #import yfinance as yf
 import requests
 import time
@@ -451,6 +471,8 @@ def sellTicker(ticker, amount):
         for users in data['accounts']:
             if user == users:
                 if (ticker in user['tickers'].keys()):
+                 if (amount > users['tickers'][ticker]):
+                     amount = users['tickers'][ticker]
                  users['tickers'][ticker] -= int(amount)
                  if (users['tickers'][ticker] <= 0):
                      users['tickers'].pop(ticker, None)
@@ -464,7 +486,40 @@ def sellTicker(ticker, amount):
             json.dump(data, out_file)
     return
 
+######### Stock buying and selling end #######
 
+
+######### Reporting Analysis Begin ##########
+
+def generateAccountReport(user):
+    print("hello")
+    with open("Reports/" + user['username'] + "_Report.csv", "w") as outfile:
+        outfile.write("Current Net\n")
+        outfile.write(str(user['revenue']) + "\n\n")
+
+        outfile.write("Total Trades\n")
+        outfile.write(str(user['trades']) + "\n\n")
+
+        outfile.write("Owned Tickers, Amount\n")
+
+        total = 0
+        for ticker in user['tickers']:
+            outfile.write(ticker + "," + str(user['tickers'][ticker]) + "\n")
+            total += user['tickers'][ticker]
+        outfile.write("\nTotal," + str(total) + "\n\n")
+
+        outfile.write("Trade History\n")
+        outfile.write("Trade #,Date, Algorithm, Ticker, Amount, Price, Buy/Sell\n")
+        for trade in user['tradeHistory']:
+            print(trade)
+            outfile.write(str(user['tradeHistory'][trade]['number']) + "," + user['tradeHistory'][trade]['date'] + "," + "Manual" + "," + 
+            user['tradeHistory'][trade]['ticker'] + "," + user['tradeHistory'][trade]['amount'] + "," + 
+            str(user['tradeHistory'][trade]['price']) + "," + user['tradeHistory'][trade]['type'] + "\n")
+        outfile.close()
+
+    return
+
+######### Reporting Analysis End ##########
 
 if __name__ == "__main__":
     app.run(debug=True)
