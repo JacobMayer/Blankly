@@ -1,0 +1,27 @@
+{
+    "coinbase_pro": {
+        "Coinbase Pro Portfolio": {
+            "API_KEY": "507de4ebdac3fe9505dc2e4b675450e3",
+            "API_SECRET": "Ar4MW4gPcFaT2Z6yP6nNKG7hAqp76HsN4374i/GB8ihKZDZvbbYVENROKxeJc+PeqRyVJvDyZyK8ld4sep3AKA==",
+            "API_PASS": "zov4xiycr6"
+        }
+    },
+    "binance": {
+        "another cool portfolio": {
+            "API_KEY": "**************************************************************",
+            "API_SECRET": "*************************************************************"
+        }
+    },
+    "alpaca": {
+        "Alpaca Portfolio" : {
+            "API_KEY": "PKKIHQN27TB4G5T47F2K",
+            "API_SECRET": "Od37e2WpUMdQfvvqLFzFdExC3LnInhue1FGI2d01"
+        }
+    },
+    "oanda": {
+        "oanda test portfolio": {
+            "ACCOUNT_ID": "********************",
+            "PERSONAL_ACCESS_TOKEN": "*****************************************************************"
+        }
+    }
+}

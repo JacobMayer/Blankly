@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  
+
+
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.0.min.js"
+  crossorigin="anonymous"></script>
+
+  <title>Trading Models - Project Passive Income</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <script src="jquery-3.6.0.js"></script>
+    <script>
+    $(function(){
+      $("#includedContent").load("bokeh.html");
+    });
+  </script>
+
+  <script >
+  function show&#95;update(1)
+  {    td1 = $('#td1'+i).html();
+      $("#showtd1").val(td1);
+  }
+  </script>
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Team 28</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user}}</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{user}}</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/profile">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/profile">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/faq">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " href="/models">
+          <i class="bi bi-robot"></i>
+          <span>Models</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/buy-sell">
+          <i class="bi bi-gem"></i>
+          <span>Buy/Sell</span>
+        </a>
+      </li><!-- End buysell Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="/profile">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/faq">
+          <i class="bi bi-question-circle"></i>
+          <span>F.A.Q</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/contact">
+          <i class="bi bi-envelope"></i>
+          <span>Contact</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+    
+
+    <div class="pagetitle">
+      <h1>Trading Bot</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item">Trading Strategies</li>
+          <li class="breadcrumb-item active">Models</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+
+
+    <section class="section models">
+      <!--
+      <form method="post">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" name="nick" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+
+          <button type="submit">Submit</button>
+      </form>
+    -->
+
+
+      <script>
+        function show() {
+
+            /* Get image and change value
+            of src attribute */
+            let image = document.getElementById("image");
+            var my_boolean = 1
+
+            image.src = 'assets/img/macd.jpeg'
+            document.getElementById("btnID")
+                    .style.display = "none";
+        }
+     </script>
+<script>$(document).ready(function() {
+
+  var numberOfClicks = 0;
+
+  $('.post-button').on('click',function(e){
+      numberOfClicks++;
+      $('#profile-overview').append('<img src="assets/img/plot_trade.png" alt="Information" >');
+
+  });
+
+});</script>
+
+     <script>
+        function appending(){
+        $("#profile-overview").append('<img src="assets/img/plot_trade.png" alt="Information" >');
+        }
+     </script>
+
+
+     <script>
+
+       function appender(){
+        var ran_bool = '{{ran_bool}}'
+        if (ran_bool == '1'){
+          var url = 'assets/img/plot_trade.png';
+
+      var image = new Image();
+      image.src = url;
+      document.getElementById('profile-overview').appendChild(image);
+       }
+        }
+
+
+     </script>
+
+
+      <ul class="nav nav-pills text-center mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">XGBOOST</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">MLP</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-comparison-tab" data-bs-toggle="pill" data-bs-target="#pills-comparison" type="button" role="tab" aria-controls="pills-comparison" aria-selected="false">Comparison</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-prophet-tab" data-bs-toggle="pill" data-bs-target="#pills-prophet" type="button" role="tab" aria-controls="pills-prophet" aria-selected="false">Prophet</button>
+        </li>
+        
+      </ul>
+
+      <form method="post">
+      <div class="tab-content justify-content-center" id="pills-tabContent">
+        <div class="tab-pane justify-content-center fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          <h3>How to use trading bot</h3>
+            <ol>
+              <li>First select which trading strategy you want to use</li>
+              <li>Once in the trading strategy tab enter the ticker that you want predictions on</li>
+              <li>Click submit and the information should show up in the box bellow</li>
+            </ol>
+
+        </div>
+        <div class="tab-pane text-center fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          
+
+          <div class="form-group text-center">
+            <label for="tickerInput1">
+              <h1>Extreme Gradient Boosting</h1>
+              Clicking submit after entering your ticker of choice will allow you to use the XGBOOST trading bot</label>
+            <input type="text" name="textinfo" class="form-control text-center" id="tickerInput1" aria-describedby="ticker" placeholder="Enter Ticker">
+            <input type="text" name="resolution" class="form-control text-center" id="resolutionInput" aria-describedby="resolution" placeholder="Enter Resolution (determines how much data we pull: 1m = one minute, 1d = one day)">
+            <input type="text" name="backtest" class="form-control text-center" id="backtestInput1" aria-describedby="backtest" placeholder="Enter how many years you want to backtest">
+
+            <input type="text" name="totalamount" class="form-control text-center" id="totalamount" aria-describedby="amount" placeholder="Enter Amount To Trade With">
+            <small id="ticker" class="form-text text-muted text-center"></small>
+          </div>
+          
+          <button type="submit" name="submit_button1" class="btn btn-primary" value="submit_it">Submit</button>
+        </div>
+
+
+        <div class="tab-pane text-center fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          
+          <div class="form-group text-center">
+            <label for="tickerInput1">
+              <h1>Multilayer Perceptron</h1>
+              Clicking submit after entering your ticker of choice will allow you to use the MLP trading bot</label>
+            <input type="text" name="textinfo2" class="form-control text-center" id="tickerInput1" aria-describedby="ticker" placeholder="Enter Ticker">
+            
+            <input type="text" name="resolution2" class="form-control text-center" id="resolutionInput2" aria-describedby="resolution2" placeholder="Enter Resolution (determines how much data we pull: 1m = one minute, 1d = one day)">
+            <input type="text" name="backtest2" class="form-control text-center" id="backtestInput2" aria-describedby="backtest2" placeholder="Enter how many years you want to backtest">
+
+            <input type="text" name="totalamount2" class="form-control text-center" id="totalamount2" aria-describedby="amount2" placeholder="Enter Amount To Trade With">
+            <small id="ticker" class="form-text text-muted text-center"></small>
+          </div>
+          
+          <button type="submit" name="submit_button1" class="btn btn-primary" value="submit_it2" >Submit</button>
+        </div>
+
+
+        <div class="tab-pane text-center fade" id="pills-comparison" role="tabpanel" aria-labelledby="pills-comparison-tab">
+          
+
+          <div class="form-group text-center">
+            <label for="tickerInput1">
+              <h1>Comparison Between XGBOOST and MLP</h1>
+              Clicking submit after entering your ticker of choice will allow you to compare values from xgboost and mlp (Warning this will have large wait times)</label>
+            <input type="text" name="textinfo3" class="form-control text-center" id="tickerInput1" aria-describedby="ticker" placeholder="Enter Ticker">
+            
+            <input type="text" name="resolution3" class="form-control text-center" id="resolutionInput3" aria-describedby="resolution3" placeholder="Enter Resolution (determines how much data we pull: 1m = one minute, 1d = one day)">
+            <input type="text" name="backtest3" class="form-control text-center" id="backtestInput3" aria-describedby="backtest3" placeholder="Enter how many years you want to backtest">
+            <input type="text" name="totalamount3" class="form-control text-center" id="totalamount3" aria-describedby="amount3" placeholder="Enter Amount To Trade With">
+
+            
+            <small id="ticker" class="form-text text-muted text-center"></small>
+          </div>
+          
+          <button type="submit" name="submit_button1" class="btn btn-primary" value="submit_it3">Submit</button>
+        </div>
+        
+
+
+        <div class="tab-pane text-center fade" id="pills-prophet" role="tabpanel" aria-labelledby="pills-prophet-tab">
+          
+
+          <div class="form-group text-center">
+            <label for="tickerInput1">
+              <h1>Prophet Time Series Forecasting</h1>
+              Clicking submit after entering your ticker of choice will allow you to use the Prophet forecasting</label>
+            <input type="text" name="textinfo4" class="form-control text-center" id="tickerInput1" aria-describedby="ticker" placeholder="Enter Ticker">
+            <small id="ticker" class="form-text text-muted text-center"></small>
+          </div>
+          
+          <button type="submit" name="submit_button1" class="btn btn-primary" value="submit_it4">Submit</button>
+        </div>
+        
+
+        </div>
+        <div class="tab-pane fade" id="pills-other" role="tabpanel" aria-labelledby="pills-other-tab">...</div>
+
+        
+  
+
+
+      </form>
+      </div>
+
+
+      
+        <!--
+        <div class="card-body">
+          <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      -->
+
+
+      <!--
+      <div class="row">
+        <div class="col-xl-3">
+          <div class="card">
+            <div class="card-body pt-6 ">
+
+              <img src="assets/img/download.png" width="200" height="100">
+              <h2>XGBoost Model</h2>
+              <h3>Extreme Gradient Boosting</h3>
+              <img id="image" src="" />
+              <form method="post" >
+                <input type="submit" name="submit_button" value="Start">
+              </form>
+
+              {%if ran_bool == 1%}
+              <button type="button"
+              onclick="appender()" id="btnID">
+              Show Image
+              </button>
+              {%endif%}
+            </div>
+          </div>
+
+        </div>
+        <div class="col-xl-3">
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+              <img src="assets/img/nah.png" alt="Profile" class="rounded-circle">
+              <h2>RSI Trading</h2>
+              <h3>Relative Strength Index</h3>
+              <div class="container">
+                <h2>Button Pressed: {{ButtonPressed}}</h2>
+                <form method="post">
+                    <input type="button" value="Click Me" >
+                </form>
+             </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-3">
+          <div class="card">
+            <div class="card-body pt-4">
+              <img src="assets/img/xgboost_v2.png" alt="Profile" class="rounded-circle">
+              <h2>XGBoost Model</h2>
+              <h3>Extreme Gradient Boosting</h3>
+
+            </div>
+          </div>
+
+        </div>
+      -->
+        <div class="col-xl-12 justify-content-center">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-metrics">Graphs</button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Example Forecasting</button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password"></button>
+                </li>
+
+              </ul>
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+
+
+
+
+
+                  <h5 class="card-title">Liability Information</h5>
+                  <p class="small fst-italic">We are not liable for any loss of money using any of our services. Invest at your own risk. </p>
+
+                  <h5 class="card-title">Trading Bot Details</h5>
+
+                  
+
+              <div class="columns download">
+                <p>
+                  <a href={{csv_dir}} class="button" download><i class="fa fa-download"></i>Download CV</a>
+               </p>
+              </div>
+                  
+
+
+              {%if ran_mlp == 1%}
+              <h3 class="card-title">You are using the {{strategy}} trading bot</h3>
+
+              {%if has_bought and metrics.CumulativeReturns >= -20 %}
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Trading Bought Decision</div>
+                <div class="col-lg-9 col-md-8">BUY</div>
+              </div>
+              {% else %}
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Trading Bought Decision</div>
+                <div class="col-lg-9 col-md-8">SELL</div>
+              </div>
+              {%if -20 >= metrics.CumulativeReturns %}
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">If you haven't bought shares, DO NOT BUY IN RIGHT NOW!</div>
+                
+              </div>
+              {%endif%}
+              {%endif%}
+
+              
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Volatility</div>
+                <div class="col-lg-9 col-md-8">{{metrics.Volatility}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Compund Annual Growth Rate(%)</div>
+                <div class="col-lg-9 col-md-8">{{metrics.CompoundAnnualGrowthRate}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Cumulative Returns</div>
+                <div class="col-lg-9 col-md-8">{{metrics.CumulativeReturns}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Max Drawdown</div>
+                <div class="col-lg-9 col-md-8">{{metrics.MaxDrawdown}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Variance</div>
+                <div class="col-lg-9 col-md-8">{{metrics.Variance}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Sortino Ratio</div>
+                <div class="col-lg-9 col-md-8">{{metrics.SortinoRatio}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Sharpe Ratio</div>
+                <div class="col-lg-9 col-md-8">{{metrics.SharpeRatio}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Calmar Ratio</div>
+                <div class="col-lg-9 col-md-8">{{metrics.CalmarRatio}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Value at Risk</div>
+                <div class="col-lg-9 col-md-8">{{metrics.ValueatRisk}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Conditional Value at Risk</div>
+                <div class="col-lg-9 col-md-8">{{metrics.ConditionalValueatRisk}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Risk Free Return Rate</div>
+                <div class="col-lg-9 col-md-8">{{metrics.RiskFreeReturnRate}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Resampled Time</div>
+                <div class="col-lg-9 col-md-8">{{metrics.ResampledTime}}</div>
+              </div>
+              {%endif%}
+
+
+                  
+                  {%if ran_bool == 1%}
+                  <h3 class="card-title">You are using the {{strategy}} trading bot</h3>
+
+                  {%if has_bought and metrics.CumulativeReturns >= -20 %}
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Trading Bought Decision</div>
+                    <div class="col-lg-9 col-md-8">BUY</div>
+                  </div>
+                  {% else %}
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Trading Bought Decision</div>
+                    <div class="col-lg-9 col-md-8">SELL</div>
+                  </div>
+                  {%if -20 >= metrics.CumulativeReturns %}
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">If you haven't bought shares, DO NOT BUY IN RIGHT NOW!</div>
+                    
+                  </div>
+                  {%endif%}
+                  {%endif%}
+
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Volatility</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.Volatility}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Compund Annual Growth Rate(%)</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.CompoundAnnualGrowthRate}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Cumulative Returns</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.CumulativeReturns}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Max Drawdown</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.MaxDrawdown}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Variance</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.Variance}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Sortino Ratio</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.SortinoRatio}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Sharpe Ratio</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.SharpeRatio}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Calmar Ratio</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.CalmarRatio}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Value at Risk</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.ValueatRisk}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Conditional Value at Risk</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.ConditionalValueatRisk}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Risk Free Return Rate</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.RiskFreeReturnRate}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Resampled Time</div>
+                    <div class="col-lg-9 col-md-8">{{metrics.ResampledTime}}</div>
+                  </div>
+                  {%endif%}
+
+
+
+
+
+                </div>
+
+                <div class="tab-pane fade profile-metrics pt-3" id="profile-metrics">
+
+                  <!-- Profile Edit Form -->
+                  <script src='jquery-3.6.0.js'></script>
+                  <script>
+                    $(function(){
+                      $("#includedContent").load("bokeh.html");
+                    });
+                  </script>
+                  <div id="includedContent"></div>
+                  
+                  {%if prophet_ranbool == 1%}
+                      <h1> {{ticker}} </h1>
+
+                    <img src={{ url }} alt="Chart" height="500" width="1000">
+                  {%endif%}
+                 <div class="bokeh text-center">
+                  
+
+                  {%if ran_comparison == 1%}
+
+                    <h1> MLP </h1>
+                    {{ script1 | safe }}
+
+                    {% for item in div1 %}
+                    {{ item | safe }}
+                    {% endfor %}
+                    
+                    <h1> XGBOOST </h1>
+
+                    {{ script2 | safe }}
+
+                    {% for item in div2 %}
+                    {{ item | safe }}
+                    {% endfor %}
+                  
+                  
+                  {%endif%}
+
+
+                  {%if ran_bool == 1%}
+                    {{ script | safe }}
+
+                    {% for item in div %}
+                    {{ item | safe }}
+                    {% endfor %}
+                    
+            
+                  
+                  
+                  {%endif%}
+                </div>
+
+                </div>
+
+                <div class="tab-pane fade pt-3" id="profile-settings">
+
+                 
+                  <h2>An example of time series forcasting using XGBOOST. Please take a look if you're interested in making your own models!</h2>
+                  <pre class="line-numbers">
+                    <code class="language-python">
+                      db = pd.read_csv('price_caches/' + csv_for_ml)
+                      dataDic = {'time': variables['time'], 'close': variables['close'], 'high' : variables['high'], 'low' : variables['low'], 'volume' : variables['volume'], 'open' : variables['open']}
+                      #db = pd.DataFrame(dataDic)
+                      for i in range(len(db['time'])):
+                          db['time'][i] = datetime.datetime.fromtimestamp(db['time'][i]).strftime("%B %d, %Y")
+                      df_close = db[['time', 'close']].copy()
+                      df_close = df_close.set_index('time')
+                      df_close.head()
+                      #print(db)
+                      db['RSI'] = calc_rsi_forRegression(db).fillna(0)
+                      #rint(db['RSI'])
+                      #creating macd signals
+                      EMA_12 = pd.Series(db['close'].ewm(span=12, min_periods=12).mean())
+                      EMA_26 = pd.Series(db['close'].ewm(span=26, min_periods=26).mean())
+                      db['MACD'] = pd.Series(EMA_12 - EMA_26).fillna(0)
+                      db['MACD_signal'] = pd.Series(db.MACD.ewm(span=9, min_periods=9).mean()).fillna(0)
+  
+                      db['EMA_9'] = db['close'].ewm(9).mean().shift()
+                      db['SMA_5'] = db['close'].rolling(5).mean().shift()
+                      db['SMA_10'] = db['close'].rolling(10).mean().shift()
+                      db['SMA_15'] = db['close'].rolling(15).mean().shift()
+                      db['SMA_30'] = db['close'].rolling(30).mean().shift()
+  
+                      #print(db)
+                      old_time = db['time']
+                      db['close'] = db['close'].shift(-1)
+                      db = db.iloc[33:] # Because of moving averages and MACD line
+                      db = db[:-1]      # Because of shifting close price
+  
+                      db.index = range(len(db))
+  
+                      test_size  = 0.15
+                      valid_size = 0.15
+                      #print(db.time)
+                      test_split_idx  = int(db.shape[0] * (1-test_size))
+                      valid_split_idx = int(db.shape[0] * (1-(valid_size+test_size)))
+  
+                      train_df  = db.loc[:valid_split_idx].copy()
+                      valid_df  = db.loc[valid_split_idx+1:test_split_idx].copy()
+                      test_df   = db.loc[test_split_idx+1:].copy()
+  
+                      drop_cols = ['volume', 'open', 'low', 'high', 'time']
+                      print(train_df)
+                      train_df = train_df.drop(drop_cols, 1)
+                      valid_df = valid_df.drop(drop_cols, 1)
+                      test_df  = test_df.drop(drop_cols, 1)
+  
+                      y_train = train_df['SMA_30'].copy()
+                      X_train = train_df.drop(['SMA_30'], 1)
+  
+                      y_valid = valid_df['SMA_30'].copy()
+                      X_valid = valid_df.drop(['SMA_30'], 1)
+  
+                      y_test  = test_df['SMA_30'].copy()
+                      X_test  = test_df.drop(['SMA_30'], 1)
+                      print(x_train)
+                      parameters = {
+                      'n_estimators': [100, 200, 300, 400],
+                      'learning_rate': [0.001, 0.005, 0.01, 0.05],
+                      'max_depth': [8, 10, 12, 15],
+                      'gamma': [0.001, 0.005, 0.01, 0.02],
+                      'random_state': [42]
+                      }
+  
+                      eval_set = [(X_train, y_train), (X_valid, y_valid)]
+                      model = xgboost.XGBRegressor( n_estimators = 300, learning_rate = 0.01, max_depth = 10, gamma = 0.001, eval_set=eval_set ,objective='reg:squarederror', verbose=False)
+                      #clf = GridSearchCV(model, parameters)
+                      model.fit(X_train, y_train, eval_set=eval_set, verbose=False)
+                      xgboost.plot_importance(model)
+                      #model.summary()
+                      y_pred = model.predict(X_test)
+                      #y_predNone = model.predict()
+                      #print(y_pred)
+                      #print(train_df['close'])
+                      #print(f'y_true = {np.array(y_test)[:5]}')
+                      #print(f'y_pred = {y_pred[:5]}')
+                      #print(f'mean_squared_error = {mean_squared_error(y_test, y_pred)}')
+                      #print(train_df)
+                      #print(variables['high'])
+                      #print(variables['history'])
+  
+  
+                      predicted_prices = db.loc[test_split_idx+1:].copy()
+                      predicted_prices['SMA_30'] = y_pred
+                      #predicted_prices[]
+                      #date_1 = datetime.datetime.strptime(start_date, "%m/%d/%y")
+                      #list_append = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                      #predicted_prices['time'].append(list_append)
+                      print(predicted_prices['time'])
+                      #end_date = date_1 + datetime.timedelta(days=10)
+                      print(len(predicted_prices['close']))
+                      
+                      print(db['time'].iloc[-1])
+                      print(predicted_prices['close'].iloc[-1])
+                      print(predicted_prices['time'].iloc[-1])
+                      
+                      fig = make_subplots(rows=2, cols=1)
+                      fig.add_trace(go.Scatter(x=db.time, y=db.SMA_30,
+                                          name='Truth',
+                                          marker_color='LightSkyBlue'), row=1, col=1)
+                      print(db.time)
+                      fig.add_trace(go.Scatter(x=predicted_prices.time,
+                                          y=predicted_prices.SMA_30,
+                                          name='Prediction',
+                                          marker_color='MediumPurple'), row=1, col=1)
+  
+                      fig.add_trace(go.Scatter(x=predicted_prices.time,
+                                          y=y_test,
+                                          name='Truth',
+                                          marker_color='LightSkyBlue',
+                                          showlegend=False), row=2, col=1)
+  
+                      fig.add_trace(go.Scatter(x=predicted_prices.time,
+                                          y=y_pred,
+                                          name='Prediction',
+                                          marker_color='MediumPurple',
+                                          showlegend=False), row=2, col=1)
+                    </code>
+                 </pre>
+                </div>
+
+                <div class="tab-pane fade pt-3" id="profile-change-password">
+                  <!-- Change Password Form -->
+                  <form>
+
+                    <div class="row mb-3">
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="password" type="password" class="form-control" id="currentPassword">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                  </form><!-- End Change Password Form -->
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Team 28</span></strong>. All Rights Reserved
+    </div>
+
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.min.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
