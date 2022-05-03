@@ -21,36 +21,36 @@ The reinforcement models were developed by [OpenAI](https://github.com/openai/ba
 
 
 ## Zimuzo Agu's Contributions
-● Intuitive UI/UX interface
-● Contact Page
-● FAQ Page
-● LSTM machine learning model
-● Helped implement flask
-● Helped implement backtesting feature into the bot
+● Intuitive UI/UX interface <br />
+● Contact Page  <br />
+● FAQ Page <br />
+● LSTM machine learning model <br />
+● Helped implement flask <br />
+● Helped implement backtesting feature into the bot <br />
 
 
 ## Justin Carlson's Contributions
-● Created the user account system for the website
-● Designed the user interface for the login page
-● Designed the user interface for the register page
-● Created Buy/Sell Page
-● Helped implement flask
-● Helped implement backtesting feature into the bot
+● Created the user account system for the website <br />
+● Designed the user interface for the login page <br />
+● Designed the user interface for the register page <br />
+● Created Buy/Sell Page <br />
+● Helped implement flask <br />
+● Helped implement backtesting feature into the bot <br />
 
 
 ## Jake Mayer's Contributions
-● Researching the packages, libraries, and frameworks that were used in the project
-● Implemented strategies including RSI, MACD, Golden Cross and Death Cross
-● Made MLTB able to trade on various stock/crypto exchanges
-● Bug testing website to identify errors
-● Connected various API keys to the bot
-● Helped implement flask
-● Helped implement backtesting feature into the bot
+● Researching the packages, libraries, and frameworks that were used in the project <br />
+● Implemented strategies including RSI, MACD, Golden Cross and Death Cross <br />
+● Made MLTB able to trade on various stock/crypto exchanges <br />
+● Bug testing website to identify errors <br />
+● Connected various API keys to the bot <br />
+● Helped implement flask <br />
+● Helped implement backtesting feature into the bot <br />
 
 
 ## Nicholas Ward Contributions
-● xgboost machine learning model
-● Prophet stock prediction
-● Machine learning model comparison
-● Helped implement flask
-● Helped implement backtesting feature into the bot
+● xgboost machine learning model <br />
+● Prophet stock prediction <br />
+● Machine learning model comparison <br />
+● Helped implement flask <br />
+● Helped implement backtesting feature into the bot <br />
