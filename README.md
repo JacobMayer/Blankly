@@ -28,7 +28,7 @@ Zimuzo was responsible for designing the Long Short Term Memory (LSTM) machine l
 
 
 ## Jake Mayer's Contributions
-Jake was responsible for implementing the trading strategies such as RSI and MACD into the code.
+Jake was responsible for researching the packages and libraries that were used in the project, as well as UI creation such as the dashboard page (index.html), implemented strategies including RSI, MACD, Golden Cross and Death Cross. He was also responsible for Team 28's Logo, as well as organizing, commenting, and maintaining links in the projects code. Additionally, he was responsible for the initial creation and maintaining of the blog website (PWEB), as well as creating and connecting API keys to the various stock and crypto exchanges for the project to function properly. He also experimented with numerous UI ideas such as Kivy, until the team settled on an online solution, flask, then bug tested the website to identify errors and inconsistencies in titles and redirects.
 
 
 ## Nicholas Ward Contributions
