@@ -1,23 +1,31 @@
 # Trading Bot
 
-The goals and actual implementations of this project are currently as follows:  
 
-1. Be able create a cryptocurrency trading bot that can run in real-time and deliver accurate, profit hungry results.
-2. Using machine learning to build a model to predict cryptocurrency price trends.
-3. Build an intuitive and functional User-interface
+## Description of Project
+The Machine Learning Trading Bot (MLTB) is a bot that uses machine learning methods to trade stocks and cryptocurrency algorithmically. The main goal of the MLTB is to assist investors in becoming as profitable as possible. By giving users powerful machine learning trading strategies wrapped in an intuitive user interface, they will be able to make logical trades at a much higher frequency than they would be able to make individually. Our hope is that the bot will allow investors to minimize the risk and time spent on high frequency trading of financial assets.
 
 
-## Code Developed By Team 28
-Team 28 is soley responsible for developing the user interface used in this projects as well as the machine learning models and the trading strategies.
 
-Reinforcement learning training [bot](https://github.com/JacobMayer/Blankly/blob/NicholasWard-RienforcementLearning/bot_training.py) python file created functionality for multiple different reinforcement learning algorithms as well as the ability for multiple cpu support, and model saving capabilities.
+## Features Developed By Team 28
+● Intuitive UI/UX interface <br />
+● Contact/FAQ Page <br />
+● User Login/Account Creation <br />
+● Backtesting to train the bot <br />
+● Connect to real stock/cryptocurrency exchanges <br />
+● Trade cryptocurrency/stocks on multiple exchanges <br />
+● Machine Learning models (XGBoost and MLP) <br />
+● Portolio diversity tracking <br />
+● Reporting & useful analysis <br />
+● Interactive Market Charts <br />
+● Comparison of different backtest on single graph <br />
+● Future market projections <br />
+
+
 
 ## Code Integrated From Other Sources
-The Blankly repository was used to implement the API calls, visualize data and calculate return on investment as well as trade across multiple exchanges
+● Blankly trading API <br />
+● Bootstrap <br />
 
-In the reinforcement learning branch, gym trading environments were created from [gym_anytrading](https://github.com/AminHP/gym-anytrading)
-
-The reinforcement models were developed by [OpenAI](https://github.com/openai/baselines)
 
 
 ## Zimuzo Agu's Contributions
