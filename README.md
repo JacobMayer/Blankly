@@ -19,17 +19,38 @@ In the reinforcement learning branch, gym trading environments were created from
 
 The reinforcement models were developed by [OpenAI](https://github.com/openai/baselines)
 
-## Justin Carlson's Contributions
-Justin was responsible for designing UI and modeling the data into an easy-to-read graphic format for the user. 
-
 
 ## Zimuzo Agu's Contributions
-Zimuzo was responsible for designing the Long Short Term Memory (LSTM) machine learning model and integrating it into the program.
+● Intuitive UI/UX interface
+● Contact Page
+● FAQ Page
+● LSTM machine learning model
+● Helped implement flask
+● Helped implement backtesting feature into the bot
+
+
+## Justin Carlson's Contributions
+● Created the user account system for the website
+● Designed the user interface for the login page
+● Designed the user interface for the register page
+● Created Buy/Sell Page
+● Helped implement flask
+● Helped implement backtesting feature into the bot
 
 
 ## Jake Mayer's Contributions
-Jake was responsible for researching the packages and libraries that were used in the project, as well as UI creation such as the dashboard page (index.html), implemented strategies including RSI, MACD, Golden Cross and Death Cross. He was also responsible for Team 28's Logo, as well as organizing, commenting, and maintaining links in the projects code. Additionally, he was responsible for the initial creation and maintaining of the blog website (PWEB), as well as creating and connecting API keys to the various stock and crypto exchanges for the project to function properly. He also experimented with numerous UI ideas such as Kivy, until the team settled on an online solution, flask, then bug tested the website to identify errors and inconsistencies in titles and redirects.
+● Researching the packages, libraries, and frameworks that were used in the project
+● Implemented strategies including RSI, MACD, Golden Cross and Death Cross
+● Made MLTB able to trade on various stock/crypto exchanges
+● Bug testing website to identify errors
+● Connected various API keys to the bot
+● Helped implement flask
+● Helped implement backtesting feature into the bot
 
 
 ## Nicholas Ward Contributions
-Nicholas was responsible for creating the Reinforcement Learning, XGBoost, Multilayer Perceptron and Prophet machine learning methods into the trading bot. As well as UI for models page.
+● xgboost machine learning model
+● Prophet stock prediction
+● Machine learning model comparison
+● Helped implement flask
+● Helped implement backtesting feature into the bot
