@@ -186,33 +186,42 @@ def buysell():
 #Models Page
 @app.route('/models', methods=['GET', 'POST'])
 def trading_models():
+    #booleans to keep track of what model was ran and what wasn't
     ran_bool = 0
     ran_mlp_bool = 0
     prophet_ranbool = 0
     ran_comparison = 0
+    #connects up to the alpaca api
     alpaca = Alpaca()
     s = Strategy(alpaca)
     csv_for_ml = ""
+    #token to get the user information
     token = request.cookies.get('token')
     if (os.path.isfile('users.json')):
+        #This is our  user
         user = getUserFromToken(token)
         if user:
             if request.method == "POST":
             #ticker = request.form.get('nick')
+
+                #This is the button that submits information from the xgboost section
                 if request.form['submit_button1'] == 'submit_it':
+
                     ticker = request.form['textinfo']
                     amount = int(request.form['totalamount'])
                     resolution = request.form['resolution']
                     backtest = request.form['backtest']
+
                     ran_bool = 1
                     # creating an init allows us to run the same function for
                     # different tickers and resolutions
+                    #runs the xgboost modol on the specified ticker and resolution
                     s.add_price_event(price_event_xgboost, ticker, resolution=resolution, init=init_xgboost)
 
-                    
+                    #We now get the backtest information of the ticker. 
                     variable = s.backtest(backtest, {'USD': amount})
 
-
+                    #This portion pulls price csv files so that it can be pulled from the database and downloaded in users
                     filenames = find_csv_filenames("price_caches/")
     
                     for name in filenames:
@@ -225,7 +234,7 @@ def trading_models():
                     target_dir = "assets/img/"
                     csv_target_dir = target_dir + csv_for_ml
 
-
+                    #Copies a file into an assest directory for easy access for html files
                     shutil.copyfile("/home/nicholas/TheCapstone/Blankly/Flask/" + csv_dir, "/home/nicholas/TheCapstone/Blankly/Flask/" + csv_target_dir)
 
 
@@ -234,19 +243,24 @@ def trading_models():
                     #script2, div2 = components(variable.figures[1])
                     #script3, div3 = components(variable.figures[2])
                     print(variable.figures)
+                    #Creates the components of the predictions/buy sell graph to be outputed to the user
                     script, div = components(variable.figures)
                     global history
                     #print (script)
+                    #This is the metrics of all the information calulated from the bot.
                     metrics = variable.get_metrics()
                     global has_bought_xgboost
+                    #a bool to send to the user if the bot thinks they should buy or sell. 
                     if has_bought_xgboost:
                         str_bought = 'True'
                     else:
                         str_bought = 'False'
                     print("--------------------------------" + str_bought + '---------------------------------------')
+                    #Translates the metrics to be better suited for viewing for the user. 
                     metrics = { x.translate({32:None}) : y
                          for x, y in metrics.items()}
                     return render_template('pages-models.html', user=user['username'],ran_mlp_bool=ran_mlp_bool, csv_dir=csv_target_dir, ran_comparison=ran_comparison, prophet_ranbool=prophet_ranbool, has_bought=has_bought_xgboost, script=script, div=div, metrics=metrics, ran_bool=ran_bool, strategy='XGBOOST')
+                #This is the submit button for the information from the mlp model
                 if request.form['submit_button1'] == 'submit_it2':
                     ticker = request.form['textinfo2']
                     amount = int(request.form['totalamount2'])
@@ -257,10 +271,11 @@ def trading_models():
     
                     
                     # different tickers and resolutions
-                    
+                    #model starts training and gathering predictions
                     s.add_price_event(price_event_mlp, ticker, resolution=resolution, init=init_mlp)
-
+                    #BACK tested to get the information from the bot predictions
                     variable = s.backtest(backtest, {'USD': amount})
+                    #Pulls csv prices based on the ticker so that the user has the option of downloading them. 
                     filenames = find_csv_filenames("price_caches/")
 
                     for name in filenames:
@@ -273,11 +288,12 @@ def trading_models():
                     target_dir = "assets/img/"
                     csv_target_dir = target_dir + csv_for_ml
 
-
+                    #Copies the downloaded file into the assets folder to easily reach the csv price files for user download. 
                     shutil.copyfile("/home/nicholas/TheCapstone/Blankly/Flask/" + csv_dir, "/home/nicholas/TheCapstone/Blankly/Flask/" + csv_target_dir)
                     # creating an init allows us to run the same function for
 
                     #use_prophet(ticker)
+                    # a way to retrieve the trading buy or sell decision from the bot. 
                     global has_bought_mlp
                     if has_bought_mlp:
                         
@@ -285,14 +301,19 @@ def trading_models():
                     else:
                         str_bought = 'False'
                     print("--------------------------------" + str_bought + '---------------------------------------')
+                    
+                    #Creates the components of the predictions/buy sell graph to be outputed to the user
                     script, div = components(variable.figures)
                     #variable.figures[2]
                     global history
                     metrics = variable.get_metrics()
+                    
+                    #Translates the metrics to be better suited for viewing for the user. 
                     metrics = { x.translate({32:None}) : y
                          for x, y in metrics.items()}
                     return render_template('pages-models.html', user=user['username'],ran_mlp_bool=ran_mlp_bool, csv_dir=csv_target_dir, ran_comparison=ran_comparison, prophet_ranbool=prophet_ranbool, has_bought=has_bought_mlp, script=script, div=div, metrics=metrics, ran_bool=ran_bool, strategy='MLP')
 
+                #This is the submit button for the comparison section
                 if request.form['submit_button1'] == 'submit_it3':
                     ticker = request.form['textinfo3']
                     amount = int(request.form['totalamount3'])
@@ -303,15 +324,17 @@ def trading_models():
                     ran_bool = 0
                     prophet_ranbool = 0
 
-                    
+                    #Starts the training and data pulling for mlp model
                     s.add_price_event(price_event_mlp, ticker, resolution=resolution, init=init_mlp)
-                    
+                    #Gets all the information that was determined from the mlp model 
                     variable_mlp = s.backtest(backtest, {'USD': amount})
-
+                    
+                    #starts the training and data pulling for the xgboost model. 
                     s.add_price_event(price_event_xgboost, ticker, resolution=resolution, init=init_xgboost)
-
+                    #Gets all the information that was determined from the xgboost model
                     variable_xgboost = s.backtest(backtest, {'USD': amount})  
 
+                    #gets the price data pulled ready for user download
                     filenames = find_csv_filenames("price_caches/")
     
                     for name in filenames:
@@ -324,30 +347,33 @@ def trading_models():
                     target_dir = "assets/img/"
                     csv_target_dir = target_dir + csv_for_ml
 
-
+                    #Copies all the price data into the assets folder for easier reach for download for the user. 
                     shutil.copyfile("/home/nicholas/TheCapstone/Blankly/Flask/" + csv_dir, "/home/nicholas/TheCapstone/Blankly/Flask/" + csv_target_dir)
 
-
+                    #Creates the graphs for the mlp model 
                     script1, div1 = components(variable_mlp.figures)
+                    #Creates the graphs for the xgboost models
                     script2, div2 = components(variable_xgboost.figures)
 
                     return render_template('pages-models.html', user=user['username'],ran_mlp_bool=ran_mlp_bool, csv_dir=csv_target_dir, ran_comparison=ran_comparison, prophet_ranbool=prophet_ranbool, script1=script1, div1=div1, script2=script2, div2=div2, ran_bool=ran_bool, strategy='Comparison')
  
-
+                #The submit button for the prophet model 
                 if request.form['submit_button1'] == 'submit_it4':
                     ticker = request.form['textinfo4']
                     ran_bool = 0
                     prophet_ranbool = 1
+
+                    #THis is just ran so that we can get the data from the api calls really easy
                     s.add_price_event(price_event_mlp, ticker, resolution='1d', init=init_mlp)
                     
                     variable = s.backtest('1y', {'USD': 1000})
 
                     
-
+                    #importing the prophet model 
                     from fbprophet import Prophet
 
 
-
+                    #pulling the price data 
                     filenames = find_csv_filenames("price_caches/")
                     csv_for_ml = ''
                     for name in filenames:
@@ -355,10 +381,11 @@ def trading_models():
                             csv_for_ml = name
                         
 
-                        
+                    #puts the data into a pandas data frame for easy data manipulation and reading
                     new_db = pd.read_csv('price_caches/' + csv_for_ml)
                     #drop_cols = ['volume', 'open', 'low', 'high']
                     print(new_db)
+                    #Changes the time values from seconds to actual dates of month, day, and year
                     for i in range(len(new_db['time'])):
                         new_db['time'][i] = datetime.datetime.fromtimestamp(new_db['time'][i]).strftime("%B %d, %Y")
                     print(new_db)
@@ -376,18 +403,21 @@ def trading_models():
                     
 
                     # The Prophet class (model)
+                    #Calling the prophet model and making sure that it is running with seasonality in mind. 
                     fbp = Prophet(daily_seasonality = True) 
-                    # Fit the model 
+                    # Fit the model to the dataframe
                     fbp.fit(df)
                     # We need to specify the number of days in future
-                    # We'll be predicting the full 2021 stock prices
                     fut = fbp.make_future_dataframe(periods=100) 
+                    #predicts what it thinks based on future dataframe
                     forecast = fbp.predict(fut)
 
                     from fbprophet.plot import plot_plotly, plot_components_plotly
+                    #Plots the graph of predictions
                     fig1 = fbp.plot(forecast, xlabel='Date', ylabel='Price')
 
                     #fig = use_prophet(ticker)
+                    #Saving the plots into the assets folder so that we easily can show the user the the prophet plot
                     if os.path.isfile('assets/img/new_plot.png'):
                         os.remove("assets/img/new_plot.png") 
                     plt.savefig('assets/img/new_plot.png')
@@ -486,6 +516,7 @@ def reports():
 ########## Blankly Dependencies Begins ##########
 
 def init_xgboost(symbol, state: StrategyState):
+    #Initialize the functions
     interface: Interface = state.interface
     resolution = state.resolution
     variables = state.variables
@@ -494,6 +525,7 @@ def init_xgboost(symbol, state: StrategyState):
     # initialize the historical data
     #variables['model'] = xgboost.XGBClassifier().fit(x_train, y_train)
     #variables['model'] = MLPClassifier(random_state=1, max_iter=10000).fit(x_train, y_train)
+    #Save the data into certian categories to get ready for datagrame
     variables['history'] = interface.history(symbol, 300, resolution, return_as='list')['close']
     variables['high'] = interface.history(symbol, 300, resolution, return_as='list')['high']
     variables['close'] = interface.history(symbol, 300, resolution, return_as='list')['close']
@@ -505,9 +537,11 @@ def init_xgboost(symbol, state: StrategyState):
     variables['open'] = interface.history(symbol, 300, resolution, return_as='list')['open']
     variables['time'] = interface.history(symbol, 300, resolution, return_as='list')['time']
 
+    #create a dictionary of all the above 
     dataDic = {'time': variables['time'], 'close': variables['close'], 'high' : variables['high'], 'low' : variables['low'], 'volume' : variables['volume'], 'open' : variables['open']}
-
+    #Turn the dictionary into a pandas dataframe
     db = pd.DataFrame(dataDic)
+    #Calculate rsi, sma50, and sma100 and fill in all NAN values with 0
     db['RSI'] = calc_rsi_forRegression(db).fillna(0)
     db['SMA_50'] = db['close'].rolling(50).mean().shift()
     db['SMA_100'] = db['close'].rolling(100).mean().shift()
@@ -534,6 +568,7 @@ def init_xgboost(symbol, state: StrategyState):
 
     ind = list(db.columns).index(1)
     y = []
+    #Creating the labels for the training set
     for i in range(db.shape[0]-1):
         if (db[1][i+1]-db[1][i])>0:
             y.append(1)
@@ -545,6 +580,7 @@ def init_xgboost(symbol, state: StrategyState):
     len(db[0])
 
     print(y)
+    #Spliting the training set
     x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
 
 
@@ -575,10 +611,12 @@ def init_xgboost(symbol, state: StrategyState):
     #X_test  = test_df.drop(['close'], 1)
     eval_set = [(x_train, y_train), (x_test, y_test)]
     print(y_train)
+    #Training the xgboost model classifier
     model = xgboost.XGBClassifier( n_estimators = 300, learning_rate = 0.01, max_depth = 10, gamma = 0.001, eval_set=eval_set ,objective='binary:logistic', verbose=False)
     #clf = GridSearchCV(model, parameters)
+    #Fit the model 
     model.fit(x_train, y_train, eval_set=eval_set, verbose=False)
-    
+    #Save the model for later predictions
     variables['model'] = model
 
     
@@ -587,10 +625,11 @@ def init_xgboost(symbol, state: StrategyState):
 def price_event_xgboost(price, symbol, state: StrategyState):
     interface: Interface = state.interface
     variables = state.variables
-
+    #Get the current prices for each day in the backtest
     variables['history'].append(price)
     model = variables['model']
     scaler = MinMaxScaler()
+    #Determining ground truth rsa sma100 and sma50 values from the price
     rsi_values = rsi(variables['history'], period=14).reshape(-1, 1)
     rsi_value = scaler.fit_transform(rsi_values)[-1]
 
@@ -600,6 +639,7 @@ def price_event_xgboost(price, symbol, state: StrategyState):
     ma100_values = sma(variables['history'], period=100).reshape(-1, 1)
     ma100_value = scaler.fit_transform(ma100_values)[-1]
     value = np.array([rsi_value, ma_value, ma100_value]).reshape(1, 3)
+    #Use the model to predict probability values that it is a 1 or a 0
     prediction = model.predict_proba(value)[0][1]
     #print(value - prediction)
     #print(prediction)
@@ -616,7 +656,7 @@ def price_event_xgboost(price, symbol, state: StrategyState):
     has_bought_xgboost = variables['has_bought']
 
 from os import listdir
-
+#a function to get the filesnames of some tickers
 def find_csv_filenames( path_to_dir, suffix=".csv" ):
     filenames = listdir(path_to_dir)
     return [ filename for filename in filenames if filename.endswith( suffix ) ]
@@ -683,13 +723,12 @@ def init_mlp(symbol, state: StrategyState):
     interface: Interface = state.interface
     resolution = state.resolution
     variables = state.variables
-    x, y = make_classification(n_samples=500, n_features=3, n_informative=3, n_redundant=0, random_state=1)
+    #x, y = make_classification(n_samples=500, n_features=3, n_informative=3, n_redundant=0, random_state=1)
     #print(x)
-    x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=1)
+    #x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=1)
     # initialize the historical data
-    #variables['model'] = xgboost.XGBClassifier().fit(x_train, y_train)
-    variables['model'] = MLPClassifier(random_state=1, max_iter=10000).fit(x_train, y_train)
-    new_model = xgboost.XGBRegressor()
+   
+    #Save the data into certian categories to get ready for datagrame
     variables['history'] = interface.history(symbol, 3000, resolution, return_as='list')['close']
     variables['high'] = interface.history(symbol, 3000, resolution, return_as='list')['high']
     variables['close'] = interface.history(symbol, 3000, resolution, return_as='list')['close']
@@ -700,11 +739,75 @@ def init_mlp(symbol, state: StrategyState):
 
     variables['open'] = interface.history(symbol, 3000, resolution, return_as='list')['open']
     variables['time'] = interface.history(symbol, 3000, resolution, return_as='list')['time']
+    #Finds the csv file of prices from the api pull
     filenames = find_csv_filenames("price_caches/")
     for name in filenames:
         if name.find(symbol) != -1:
             csv_for_ml = name
         
+
+    
+    #Puts the data into a dictionary
+    dataDic = {'time': variables['time'], 'close': variables['close'], 'high' : variables['high'], 'low' : variables['low'], 'volume' : variables['volume'], 'open' : variables['open']}
+    #That dictionary is then put into a pandas dataframe
+    db = pd.DataFrame(dataDic)
+    #Calculating the rsi, sma50, and sma100 values and setting any nan values to 0
+    db['RSI'] = calc_rsi_forRegression(db).fillna(0)
+    db['SMA_50'] = db['close'].rolling(50).mean().shift()
+    db['SMA_100'] = db['close'].rolling(100).mean().shift()
+    scaler = MinMaxScaler()
+    #print(db)
+    #b['RSI'] = db['RSI'].reshape(-1,1)
+    #db['RSI'] = scaler.fit_transform(db['RSI'])
+    print(db)
+    #data = db.values[]
+    # perform a robust scaler transform of the dataset
+    trans = MinMaxScaler()
+    data = trans.fit_transform(db)
+    # convert the array back to a dataframe
+    db = pd.DataFrame(data)
+    # summarize
+    print(db)
+    
+    #print(db)
+
+    #0- high, 1- close, 2-low 3-volume 4-time, 5-open
+    drop_cols = [0,1, 2, 3, 4, 5]
+    #y = db[1].copy
+    x = db.drop(drop_cols, 1)
+
+    ind = list(db.columns).index(1)
+    y = []
+    #Creating labels for the training data
+    for i in range(db.shape[0]-1):
+        if (db[1][i+1]-db[1][i])>0:
+            y.append(1)
+        else:
+            y.append(0)
+    y.append(0)
+    len(y)
+    print(x)
+    len(db[0])
+
+    #print(y)
+    #Spliting the data
+    x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+    #print(x_train)
+
+    #Setting each column so that the nan values are equal to 0
+    x_train[6].fillna(value = 0, inplace = True)
+    x_train[7].fillna(value = 0, inplace = True)
+    x_train[8].fillna(value = 0, inplace = True)
+
+
+    test_size  = 0.15
+    valid_size = 0.15
+    #print(db.time)
+    test_split_idx  = int(db.shape[0] * (1-test_size))
+    valid_split_idx = int(db.shape[0] * (1-(valid_size+test_size)))
+    #Training the model and then saving it into models for later use
+    variables['model'] = MLPClassifier(random_state=1, max_iter=10000).fit(x_train, y_train)
+
     '''
         
     db = pd.read_csv('price_caches/' + csv_for_ml)
@@ -893,11 +996,12 @@ def price_event_mlp(price, symbol, state: StrategyState):
 
 
 
-
+    #save the price of the actual prices 
     variables['history'].append(price)
     model = variables['model']
     scaler = MinMaxScaler()
     #print(variables['history'])
+    #getting the rsi, sma50 and sma100 values form the real price on testing
     rsi_values = rsi(variables['history'], period=14).reshape(-1, 1)
     #print(rsi_values)
     rsi_value = scaler.fit_transform(rsi_values)[-1]
@@ -908,14 +1012,16 @@ def price_event_mlp(price, symbol, state: StrategyState):
     ma100_values = sma(variables['history'], period=100).reshape(-1, 1)
     ma100_value = scaler.fit_transform(ma100_values)[-1]
     value = np.array([rsi_value, ma_value, ma100_value]).reshape(1, 3)
+    #predict on the obtained values. 
     prediction = model.predict_proba(value)[0][1]
+    print(prediction)
     #print(value)
     #print(prediction)
     # comparing prev diff with current diff will show a cross
-    if prediction > 0.4 and not variables['has_bought']:
+    if prediction > 0.54 and not variables['has_bought']:
         interface.market_order(symbol, 'buy', trunc(interface.cash/price, 8))
         variables['has_bought'] = True
-    elif prediction <= 0.4 and variables['has_bought']:
+    elif prediction <= 0.54 and variables['has_bought']:
         # truncate is required due to float precision
         interface.market_order(symbol, 'sell', interface.account[state.base_asset]['available'])
         variables['has_bought'] = False
@@ -923,7 +1029,7 @@ def price_event_mlp(price, symbol, state: StrategyState):
    
     has_bought_mlp = variables['has_bought']
 
-
+#function to easily calculate the dataframe colume rsi values on close column.
 def calc_rsi_forRegression(dataframe):
     n = 14
     close = dataframe['close']
@@ -939,6 +1045,7 @@ def calc_rsi_forRegression(dataframe):
     rs = rollUp / rollDown
     rsi = 100.0 - (100.0 / (1.0 + rs))
     return rsi
+
 ########## Blankly Dependencies Ends ##########
 
 #import yfinance as yf
